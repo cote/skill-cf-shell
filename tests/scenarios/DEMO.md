@@ -1,456 +1,160 @@
-# cf-shell demo runbook
+# cf-shell demo
 
-A step-by-step script you drive by hand. No Claude required; every
-step is a shell command you paste. Designed to be watched — each
-tier has milestones with observation suggestions between them.
+Five-step flow. You run Claude, Claude uses the `cf-shell` skill to
+do real work on a CF foundation. No paste-along milestones.
 
-## Before anything
+## 1. Install the skill
+
+A Claude Code "skill" is just a directory at
+`~/.claude/skills/<name>/` containing a `SKILL.md` (plus any scripts
+and references it ships). There is no `claude skill install`
+subcommand today. Two ways to land this one:
+
+**From the dev repo (preferred if you have it cloned):**
+
+```bash
+git clone <wherever skill-cf-shell lives> ~/dev/skill-cf-shell
+bash ~/.claude/skills/make-skill/scripts/build-skill.sh cf-shell
+bash ~/.claude/skills/make-skill/scripts/install-skill.sh cf-shell
+```
+
+That copies the built artifact to `~/.claude/skills/cf-shell/`.
+Requires the `make-skill` skill already installed — if you don't have
+it, the manual path below is fine.
+
+**Manual copy:**
+
+```bash
+mkdir -p ~/.claude/skills/cf-shell
+cp -r ~/dev/skill-cf-shell/src/cf-shell/* ~/.claude/skills/cf-shell/
+chmod u+x ~/.claude/skills/cf-shell/scripts/*.sh
+```
+
+Either way, confirm:
+
+```bash
+ls ~/.claude/skills/cf-shell/
+# expect: SKILL.md  references/  scripts/
+```
+
+## 2. Log into CF
+
+The skill never handles your CF login. It assumes `cf target` already
+succeeded and lets you do whatever SSO flow your foundation uses.
+
+```bash
+cf login -a https://api.sys.<your-foundation>
+```
+
+Follow the prompts (password, SSO one-time code, whatever). On
+success, `cf` writes an OAuth refresh token to
+`~/.cf/config.json` (mode 0600). That's the only credential store —
+you don't need to export anything into your shell env, you don't
+pass a token to Claude, and you don't put it in a `.env` file.
+
+Sanity check:
 
 ```bash
 cf target
+# API endpoint, user, org, space all shown
 ```
 
-Must show a logged-in API endpoint, org, space. If not, `cf login`
-and come back.
+Every `cf` command from now on — including the ones the skill shells
+out — reads from `~/.cf/config.json`. Tokens refresh automatically
+until the session expires.
 
-Save the long path to the dispatcher in a shell variable so the
-commands below stay short:
+## 3. Launch Claude in that same terminal
 
 ```bash
-CFS=~/.claude/skills/cf-shell/scripts/cf-shell.sh
+cd ~/dev/skill-cf-shell     # or wherever makes sense for your task
+claude
 ```
 
-After that, `bash $CFS deploy foo` expands to
-`bash /Users/cote/.claude/skills/cf-shell/scripts/cf-shell.sh deploy foo`.
-This variable only lives in the current shell — if you open a new
-tab, run the same line again. If you'd rather just paste the full
-path every time, skip this and replace every `$CFS` below with
-`~/.claude/skills/cf-shell/scripts/cf-shell.sh`.
+Why same terminal: any bash Claude spawns inherits your environment,
+and therefore inherits `cf`'s config. If you log in in one terminal
+and launch `claude` in another fresh shell, you're still fine because
+`~/.cf/config.json` is filesystem state, not env state — but keeping
+it to one terminal avoids the "which `cf target` am I on?" confusion
+during the demo.
 
-## Suggested terminal layout
+## 4. Ask Claude to confirm it has CF access
 
-Three panes (or tabs) alongside the one you're running commands in:
+Opening turn, plain English:
 
-- **Left**: `watch -n 2 cf apps` — see apps appear and disappear.
-- **Middle**: idle, used on demand for `cf env <app>` /
-  `cf logs <app> --recent`.
-- **Right**: idle, used during Tier 3 for
-  `cf logs cfsh-demo-03` (no `--recent` = live tail) to watch
-  staging output.
+> Can you check that you have access to a Cloud Foundry foundation?
+> If so, tell me which one.
 
-## Preflight
+**Expected behavior:** Claude runs `cf target`, reads the output,
+reports back the API endpoint, user, org, and space. If the login
+expired or you skipped step 2, it'll say so and stop.
 
-Check the space is clean of leftover scenario apps:
+You can sharpen the test with:
+
+> List the apps in my current space, and tell me if any of them look
+> like existing `cf-shell` deployments.
+
+Claude should `cf apps`, recognize that nothing starts with `cfsh-`
+(if the space is clean), and say so.
+
+## 5. Ask Claude to OCR the invoices via cf-shell
+
+Natural language, no mention of the skill by name — the skill's
+description triggers:
+
+> There are six invoice images at
+> `~/dev/skill-cf-shell/tests/scenarios/03-ocr-extend/input/`. Use
+> a Cloud Foundry-hosted shell to OCR them and give me the totals
+> plus a grand total in EUR. For any invoices in USD, convert at
+> 1 USD = 0.92 EUR.
+
+**What Claude should do (roughly):**
+
+1. Pick up the `cf-shell` skill from its description.
+2. Preflight → deploy a default binary-stack shell (~20s).
+3. Notice tesseract isn't there. Read
+   `references/extending.md`. Edit the pushed `manifest.yml` under
+   `~/.cache/cf-shell/push/<app>/` to add `apt-buildpack` +
+   `python_buildpack` in front of `binary_buildpack`. Drop in
+   `apt.yml` (tesseract + language packs) and `requirements.txt`
+   (pytesseract + Pillow). Re-`cf push` (~3–5 min).
+4. Upload the six PNGs via chunked base64 (the biggest is ~430 KB,
+   too large for a single POST).
+5. OCR each one. `-l eng` for the English invoices, `-l spa+cat`
+   for the Spanish/Catalan `factura_*.png` files.
+6. Aggregate, compute the grand total, report.
+7. Destroy the app when done.
+
+**What to watch in a second terminal if you want live feedback:**
 
 ```bash
-cf apps | grep '^cfsh-' || echo "no cfsh-* apps — clean"
+watch -n 2 cf apps                  # app appears + disappears
+cf logs <app-name>                  # shell2http POSTs as they land
+                                    # + cf push staging output
 ```
 
-If anything shows up, wipe it before starting:
+## Troubleshooting
 
-```bash
-bash ~/dev/skill-cf-shell/tests/scenarios/cleanup.sh --yes
-```
-
-Pick a tier. Three independent tracks — do one, all, or skip around.
-
----
-
-# Tier 1 — sed/awk on a CSV
-
-~60 seconds. Binary buildpack only, no extension. The cheapest way
-to see the whole deploy → auth → exec → destroy loop.
-
-App name throughout: `cfsh-demo-01`.
-
-## M1. Deploy
-
-```bash
-bash $CFS deploy cfsh-demo-01
-```
-
-**What to look for:**
-- Final lines:
-  - `cf-shell: SH_BASIC_AUTH set to admin:xxxxxxxxxxxxxxxxxxxxxxxx`
-  - `cf-shell: ready at https://cfsh-demo-01.apps.<domain>/exec`
-- In the **watch pane**, `cfsh-demo-01` appears in `cf apps`.
-
-**Optional observation:**
-
-```bash
-cf env cfsh-demo-01 | grep -A1 User-Provided
-```
-
-That's where the credential lives. Nowhere local.
-
-## M2. Smoke test — prove the shell works
-
-```bash
-bash $CFS exec cfsh-demo-01 'uname -a; whoami; hostname; echo pwd=$(pwd)'
-```
-
-**What to look for:**
-- `Linux ... x86_64 GNU/Linux`
-- `uid=2000(vcap)` — we run as `vcap`, not root.
-- `hostname` is a container UUID; `pwd` is `/home/vcap/app`.
-
-## M3. Upload the CSV
-
-22 KB raw → ~30 KB base64, fits in one form-POST.
-
-```bash
-B64=$(base64 < ~/dev/skill-cf-shell/tests/scenarios/01-sed-awk/input/shipments.csv | tr -d '\n')
-bash $CFS exec cfsh-demo-01 "mkdir -p /home/vcap/app/data && printf %s '$B64' | base64 -d > /home/vcap/app/data/shipments.csv && wc -l /home/vcap/app/data/shipments.csv && md5sum /home/vcap/app/data/shipments.csv"
-```
-
-**What to look for:**
-- `201 /home/vcap/app/data/shipments.csv`
-- An md5 hash. Compare against local:
+- **"Claude doesn't seem to know about cf-shell"** — the skill's
+  description has to match the user turn strongly enough to trigger.
+  If Claude goes off-piste, say "use the cf-shell skill" explicitly
+  and it'll pick up. Long-term fix: tune the skill description.
+- **`cf target` fails inside Claude's bash calls** — you either
+  didn't run step 2, or your foundation invalidated the token. Run
+  `cf login` again in the same terminal and continue.
+- **App already exists from a prior run** — either tell Claude
+  "destroy any existing cfsh-* apps first" or run the cleanup script
+  yourself before launching claude:
   ```bash
-  md5 -q ~/dev/skill-cf-shell/tests/scenarios/01-sed-awk/input/shipments.csv
+  bash ~/dev/skill-cf-shell/tests/scenarios/cleanup.sh --yes
   ```
-  Should match exactly.
 
-## M4. Aggregate inside the container
-
-The awk runs over there, not on your laptop.
-
-```bash
-bash $CFS exec cfsh-demo-01 - <<'REMOTE'
-awk -F, 'NR>1 {sum[$4] += $7} END {for (k in sum) printf "%-25s %d\n", k, sum[k]}' /home/vcap/app/data/shipments.csv | sort -k2 -rn
-REMOTE
-```
-
-**What to look for:**
-
-```
-Lidl                      243
-Jumbo                     184
-Vomar                     183
-Aldi                      178
-Coop                      154
-Plus                      147
-Albert Heijn              144
-Dirk van den Broek        103
-```
-
-Lidl wins with 243 cases.
-
-## M5. Cleanup
-
-```bash
-bash ~/dev/skill-cf-shell/tests/scenarios/cleanup.sh --yes
-```
-
-**What to look for:**
-- `cf delete -f cfsh-demo-01` → `OK`
-- Local push dir removed.
-- `cf apps` (watch pane) drops back to the pre-demo state.
-
----
-
-# Tier 2 — write a script, run it
-
-~60 seconds. Binary only. Demonstrates "container filesystem persists
-across exec calls, env does not."
-
-App name: `cfsh-demo-02`.
-
-## M1. Deploy
-
-```bash
-bash $CFS deploy cfsh-demo-02
-```
-
-Same signals as Tier 1 M1.
-
-## M2. Write `multiplier.sh` locally, then stage it in the container
-
-Create the script on your laptop first:
-
-```bash
-cat > /tmp/multiplier.sh <<'SCRIPT'
-#!/bin/bash
-set -eu
-N="${1:-10}"
-for i in $(seq 1 "$N"); do
-  row=""
-  for j in $(seq 1 "$N"); do row+=$(printf "%4d" $((i*j))); done
-  echo "$row"
-done
-SCRIPT
-```
-
-Then stage it into the container — **one exec call**:
-
-```bash
-B64=$(base64 < /tmp/multiplier.sh | tr -d '\n')
-bash $CFS exec cfsh-demo-02 "mkdir -p /home/vcap/app/data && printf %s '$B64' | base64 -d > /home/vcap/app/data/multiplier.sh && chmod +x /home/vcap/app/data/multiplier.sh && ls -l /home/vcap/app/data/multiplier.sh"
-```
-
-**What to look for:**
-- `-rwxr-xr-x 1 vcap vcap 222 ... /home/vcap/app/data/multiplier.sh`
-
-## M3. Prove env doesn't persist, fs does
-
-**Separate exec.** The script from M2 should still be there, but
-anything we "exported" in M2 is gone.
-
-```bash
-bash $CFS exec cfsh-demo-02 - <<'REMOTE'
-echo "=== files in /home/vcap/app/data: ==="
-ls /home/vcap/app/data
-echo
-echo "=== env check ==="
-echo "SOMETHING=[$SOMETHING]"
-echo "pwd=$(pwd)"
-REMOTE
-```
-
-**What to look for:**
-- `multiplier.sh` listed (fs persisted).
-- `SOMETHING=[]` (env didn't persist — no error because of lazy
-  expansion, just empty).
-- `pwd=/home/vcap/app` (cwd is fresh, same starting point as any new
-  `bash -lc`).
-
-## M4. Run the staged script
-
-```bash
-bash $CFS exec cfsh-demo-02 '/home/vcap/app/data/multiplier.sh 12'
-```
-
-**What to look for:**
-
-12 rows × 12 columns. Bottom-right cell:
-
-```
-  12  24  36  48  60  72  84  96 108 120 132 144
-```
-
-## M5. Cleanup
-
-```bash
-bash ~/dev/skill-cf-shell/tests/scenarios/cleanup.sh --yes
-```
-
----
-
-# Tier 3 — extend the container with apt + python, then OCR
-
-3–5 minutes. Real `cf push` with extra buildpacks. Worth watching
-`cf logs cfsh-demo-03` live during M4.
-
-App name: `cfsh-demo-03`.
-
-## M1. Deploy the base stack first
-
-```bash
-bash $CFS deploy cfsh-demo-03
-```
-
-Why deploy bare first: to see the "missing tool" state before we
-extend. Also so we can show `SH_BASIC_AUTH` persists across the
-re-push in M4.
-
-## M2. Prove the base stack has no OCR tooling
-
-```bash
-bash $CFS exec cfsh-demo-03 "which tesseract || echo TESSERACT_MISSING; python3 -c 'import pytesseract' 2>&1 | tail -1"
-```
-
-**What to look for:**
-- `TESSERACT_MISSING`
-- `ModuleNotFoundError: No module named 'pytesseract'`
-
-(python3 itself IS in the base stack — only the module is missing.)
-
-## M3. Write the extension files into the push dir
-
-The `cf-shell deploy` step in M1 created a push dir at
-`~/.cache/cf-shell/push/cfsh-demo-03/` with a `manifest.yml` and the
-`shell2http` binary. We edit those in place.
-
-**Replace `manifest.yml`:**
-
-```bash
-cat > ~/.cache/cf-shell/push/cfsh-demo-03/manifest.yml <<'YAML'
----
-applications:
-  - name: cfsh-demo-03
-    memory: 512M
-    disk_quota: 1G
-    instances: 1
-    buildpacks:
-      - https://github.com/cloudfoundry/apt-buildpack
-      - python_buildpack
-      - binary_buildpack
-    command: ./shell2http -form -export-all-vars -include-stderr -no-log-timestamp -timeout=300 -port=$PORT /exec 'bash -lc "$v_cmd"'
-    health-check-type: port
-YAML
-```
-
-Buildpack order matters: `binary_buildpack` must stay **last** — it
-supplies `shell2http`.
-
-**Add `apt.yml`:**
-
-```bash
-cat > ~/.cache/cf-shell/push/cfsh-demo-03/apt.yml <<'YAML'
----
-packages:
-  - tesseract-ocr
-  - tesseract-ocr-eng
-  - tesseract-ocr-spa
-  - tesseract-ocr-cat
-YAML
-```
-
-**Add `requirements.txt`:**
-
-```bash
-cat > ~/.cache/cf-shell/push/cfsh-demo-03/requirements.txt <<'TXT'
-pytesseract==0.3.13
-Pillow==11.0.0
-TXT
-```
-
-**Eyeball it:**
-
-```bash
-ls -la ~/.cache/cf-shell/push/cfsh-demo-03/
-```
-
-You should see: `apt.yml`, `manifest.yml`, `requirements.txt`,
-`shell2http` (the Go binary, ~5.5 MB).
-
-## M4. Re-push
-
-**Before starting**, in the right-hand pane:
-
-```bash
-cf logs cfsh-demo-03   # no --recent — live tail
-```
-
-Then in the main pane:
-
-```bash
-( cd ~/.cache/cf-shell/push/cfsh-demo-03 && cf push -f manifest.yml -p . )
-```
-
-**What to watch in the log pane:**
-- `apt-get install ... tesseract-ocr ...`
-- `pip install ... pytesseract ...`
-- Eventually `-----> Uploading droplet...`
-
-When the main pane returns, you should see three buildpacks listed:
-
-```
-buildpacks:
-  https://github.com/cloudfoundry/apt-buildpack   0.3.15
-  python_buildpack                                1.8.81
-  binary_buildpack                                1.1.59    binary
-```
-
-**Confirm `SH_BASIC_AUTH` survived:**
-
-```bash
-cf env cfsh-demo-03 | grep SH_BASIC_AUTH
-```
-
-Same credential as M1. Re-pushes don't rotate.
-
-## M5. Verify the stack
-
-`apt-buildpack` installs under `/home/vcap/deps/0/apt/usr/...` rather
-than `/usr/...`, so `tesseract` can't find its data files without
-`TESSDATA_PREFIX` set. Each `exec` is a fresh `bash -lc` so the
-prefix has to be exported every time.
-
-```bash
-bash $CFS exec cfsh-demo-03 - <<'REMOTE'
-export TESSDATA_PREFIX=/home/vcap/deps/0/apt/usr/share/tesseract-ocr/4.00/tessdata
-which tesseract && tesseract --version 2>&1 | head -1
-echo
-echo "=== available langs ==="
-tesseract --list-langs
-echo
-echo "=== python pkgs ==="
-python3 -c 'import pytesseract, PIL; print("pytesseract", pytesseract.__version__, "PIL", PIL.__version__)'
-REMOTE
-```
-
-**What to look for:**
-- `/home/vcap/deps/0/bin/tesseract`
-- `tesseract 4.1.1`
-- Four languages: `cat eng osd spa`
-- `pytesseract 0.3.13 PIL 11.0.0`
-
-## M6. Upload one invoice (single-POST)
-
-The fixture has 6 PNGs, up to 430 KB each. For the demo we do the
-smallest one (`invoice_01.png`, 140 KB → ~188 KB base64) in a single
-POST. The full flow with chunked uploads is in
-`03-ocr-extend/PROMPT.md`.
-
-```bash
-B64=$(base64 < ~/dev/skill-cf-shell/tests/scenarios/03-ocr-extend/input/invoice_01.png | tr -d '\n')
-bash $CFS exec cfsh-demo-03 "mkdir -p /home/vcap/app/data/invoices && printf %s '$B64' | base64 -d > /home/vcap/app/data/invoices/invoice_01.png && wc -c /home/vcap/app/data/invoices/invoice_01.png"
-```
-
-**What to look for:** `140597 /home/vcap/app/data/invoices/invoice_01.png` — exact byte match.
-
-## M7. OCR it
-
-```bash
-bash $CFS exec cfsh-demo-03 - <<'REMOTE'
-export TESSDATA_PREFIX=/home/vcap/deps/0/apt/usr/share/tesseract-ocr/4.00/tessdata
-cd /home/vcap/app/data/invoices
-tesseract invoice_01.png - -l eng 2>/dev/null
-REMOTE
-```
-
-**What to look for:**
-- `POOCH PALACE` header
-- Line items (Spay/neuter surgery, Orthopedic surgery, etc.)
-- `TOTAL DUE $10974.70`
-
-If you want the full six-invoice flow (chunked uploads for the large
-ones, mixed-language OCR, grand total in EUR), follow
-`03-ocr-extend/PROMPT.md` end to end.
-
-## M8. Cleanup
-
-```bash
-bash ~/dev/skill-cf-shell/tests/scenarios/cleanup.sh --yes
-```
-
----
-
-# Quick reference
-
-| Command | Purpose |
-|---------|---------|
-| `bash $CFS preflight` | Check cf/curl/jq + cache shell2http |
-| `bash $CFS deploy <app>` | Push + set SH_BASIC_AUTH |
-| `bash $CFS exec <app> '<cmd>'` | Run `<cmd>` in a fresh `bash -lc` |
-| `bash $CFS exec <app> -` | Read the command from stdin (heredoc-friendly) |
-| `bash $CFS url <app>` | Print `https://.../exec` |
-| `bash $CFS destroy <app>` | `cf delete -f` |
-| `bash cleanup.sh --yes` | Nuke all `cfsh-*` apps, services, and local push dirs |
-
-# Tips
-
-- **Pipe heredocs for anything multi-line.** Bash quoting is the
-  single biggest papercut when crafting `cmd=` payloads.
-- **Each exec is a fresh `bash -lc`.** No cwd, no env, no open file
-  handles carry across calls. The container filesystem DOES carry
-  (same container instance), but don't rely on that across a
-  `cf push` or restart.
-- **Credentials only live in `cf env`.** Not in a file on your
-  laptop, not in the dispatcher's state. If you destroy and
-  re-deploy, you get a new random `SH_BASIC_AUTH`.
-- **Re-push preserves `SH_BASIC_AUTH`** (Tier 3 relies on this).
-- **Watch `cf logs <app>` live** during `cf push` in Tier 3 — the
-  staging logs are where "the platform is actually building this
-  thing" becomes visible.
+## Variants
+
+- **Lighter demo**: swap step 5 for "Aggregate
+  `tests/scenarios/01-sed-awk/input/shipments.csv` by store chain
+  via a CF-hosted shell." No buildpack extension, whole thing runs
+  in ~90 seconds.
+- **Service binding (when we get to it)**: "Bind a seaweedfs
+  instance to your cf-shell and stash the OCR results in the bucket
+  so they survive restart." Different shape — requires the skill to
+  accept a service-binding arg at deploy time, which it doesn't yet.
