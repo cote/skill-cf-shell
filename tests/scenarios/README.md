@@ -17,10 +17,6 @@ the filesystem-persists / env-doesn't model correctly." Tier 3 is "can
 the model drive a non-trivial buildpack extension from the skill's
 reference doc."
 
-For a hands-on, human-driven walkthrough of the same three tiers —
-paste commands, watch what happens in a second terminal — see
-[`DEMO.md`](DEMO.md).
-
 ## Running a scenario
 
 These need a real CF foundation, a successful `cf target`, and (for
@@ -73,4 +69,4 @@ is safe to run at the start or end of any scenario session.
 - The skill itself: `../../src/cf-shell/SKILL.md`
 - Dispatcher: `../../src/cf-shell/scripts/cf-shell.sh`
 - Extension reference: `../../src/cf-shell/references/extending.md`
-- `DEMO.md` — five-step Claude-driven runbook for the same flows.
+- The scenario `PROMPT.md` files are the canonical runbook for each tier. Hand one to a fresh Claude session to exercise the corresponding flow.
