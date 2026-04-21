@@ -6,7 +6,7 @@ set -euo pipefail
 SHELL2HTTP_VERSION="1.17.0"
 SHELL2HTTP_URL="https://github.com/msoap/shell2http/releases/download/v${SHELL2HTTP_VERSION}/shell2http_${SHELL2HTTP_VERSION}_linux_amd64.tar.gz"
 
-CACHE_DIR="$HOME/apps/cf-shell/cache"
+CACHE_DIR="${CF_SHELL_CACHE:-${XDG_CACHE_HOME:-$HOME/.cache}/cf-shell}"
 BIN_DIR="$CACHE_DIR/bin"
 PUSH_ROOT="$CACHE_DIR/push"
 SHELL2HTTP_BIN="$BIN_DIR/shell2http"
@@ -46,12 +46,19 @@ app_route() {
 
 app_basic_auth() {
   local app="$1"
-  cf env "$app" 2>/dev/null \
+  # Read cf env fully first, then parse. A piped `awk '... exit'` would
+  # SIGPIPE cf env on match, which pipefail propagates as 141.
+  local env_out
+  env_out="$(cf env "$app" 2>/dev/null)" || return 0
+  printf %s "$env_out" \
     | awk '/^SH_BASIC_AUTH:/{sub(/^SH_BASIC_AUTH:[[:space:]]*/,""); print; exit}'
 }
 
 random_password() {
-  LC_ALL=C tr -dc 'A-Za-z0-9' </dev/urandom | head -c 24
+  # tr reads /dev/urandom forever; head closes stdin after 24 bytes and
+  # tr gets SIGPIPE. Without a subshell, pipefail would propagate 141
+  # to the caller, killing the script under `set -e`.
+  ( LC_ALL=C tr -dc 'A-Za-z0-9' </dev/urandom | head -c 24 ) || true
 }
 
 cmd_deploy() {

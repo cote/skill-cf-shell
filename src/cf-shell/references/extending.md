@@ -2,8 +2,9 @@
 
 Default deploy uses only `binary_buildpack` + `shell2http`. Base stack
 gives you bash, coreutils, curl, usually python3, awk, sed. To add
-more, edit `manifest.yml` under `~/apps/cf-shell/cache/push/<app>/`,
-drop in companion files, re-`cf push`.
+more, edit `manifest.yml` under `$CACHE/push/<app>/` (where `$CACHE`
+defaults to `${XDG_CACHE_HOME:-~/.cache}/cf-shell`, override with
+`$CF_SHELL_CACHE`), drop in companion files, re-`cf push`.
 
 **`binary_buildpack` always stays last** — it provides shell2http.
 Everything else goes before it.
@@ -34,6 +35,16 @@ packages:
 
 Unknown package names will fail the push — whatever apt archive the
 foundation is wired to decides availability.
+
+**apt-buildpack installs to a non-standard prefix.** Packages land
+under `/home/vcap/deps/0/apt/usr/...` rather than `/usr/...`. Binaries
+are on `$PATH` automatically, but tools that look up data by a
+compiled-in path may not find it. Example — tesseract:
+
+    export TESSDATA_PREFIX=/home/vcap/deps/0/apt/usr/share/tesseract-ocr/4.00/tessdata
+
+You need to do this in every `exec` that invokes `tesseract`; each
+call is a fresh `bash -lc` and env doesn't carry.
 
 ## Python packages
 
@@ -72,7 +83,7 @@ available to every exec (parse with `jq`).
 
 ## After editing
 
-    cd ~/apps/cf-shell/cache/push/<app>
+    cd "${XDG_CACHE_HOME:-$HOME/.cache}/cf-shell/push/<app>"
     cf push -f manifest.yml -p .
 
 `SH_BASIC_AUTH` persists across pushes. Container filesystem is
