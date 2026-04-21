@@ -113,7 +113,7 @@ panes total:
   `cf events` lists the audit trail:
   `audit.app.create`, `audit.app.update`, `audit.app.upload`,
   `audit.app.restart`, `audit.app.delete` — each with a timestamp
-  and the actor (`agent-cote` in this demo). Updates every 5s. This
+  and the actor (your CF user). Updates every 5s. This
   is the view a platform team would point at for "who pushed what,
   when." Pair it with `cf logs` and you get both the what (logs)
   and the why (audit events) of everything Claude triggers.

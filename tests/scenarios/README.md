@@ -73,5 +73,4 @@ is safe to run at the start or end of any scenario session.
 - The skill itself: `../../src/cf-shell/SKILL.md`
 - Dispatcher: `../../src/cf-shell/scripts/cf-shell.sh`
 - Extension reference: `../../src/cf-shell/references/extending.md`
-- Origin of the OCR scenario: `~/dev/larry-cf-shell/ocr-shell-platform/`
-  (the purpose-built setup the skill was generalized from).
+- `DEMO.md` — five-step Claude-driven runbook for the same flows.
