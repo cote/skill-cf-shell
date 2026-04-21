@@ -24,6 +24,7 @@ One dispatcher with subcommands. Default app name is `cf-shell`
 
     scripts/cf-shell.sh preflight
     scripts/cf-shell.sh deploy   [app]
+    scripts/cf-shell.sh secure   [app]
     scripts/cf-shell.sh exec     [app] "uname -a"
     scripts/cf-shell.sh exec     [app] -           # read cmd from stdin
     scripts/cf-shell.sh url      [app]
@@ -34,6 +35,11 @@ One dispatcher with subcommands. Default app name is `cf-shell`
 - **deploy** — pushes `binary_buildpack` + `shell2http` with a random
   `SH_BASIC_AUTH` (username `admin`), or updates in place if the app
   already exists (preserving the existing credential).
+- **secure** — idempotent: sets `SH_BASIC_AUTH` on an existing app if
+  it isn't set, restarts to pick it up. Use this when you extended
+  the container by running your own `cf push` (rather than via
+  `deploy`) — the hand-rolled push leaves `/exec` *unauthenticated*
+  until you run `secure`. See `references/extending.md`.
 - **exec** — reads `SH_BASIC_AUTH` from `cf env <app>`, POSTs `cmd=...`
   to `/exec`, prints the body, exits with the remote exit code (from
   the `X-Shell2http-Exit-Code` header).
@@ -70,3 +76,8 @@ and drop in the companion files. See `references/extending.md`.
 - The route is public — anyone with URL + password can `bash`.
   `destroy` when done.
 - Commands passed to `exec` run in the container, not locally.
+- **If you `cf push` the app outside `deploy`** (e.g., extending by
+  authoring your own manifest), the new droplet has no
+  `SH_BASIC_AUTH` set and `/exec` is **open to the internet**. Run
+  `scripts/cf-shell.sh secure <app>` immediately after any such push
+  to lock it down.

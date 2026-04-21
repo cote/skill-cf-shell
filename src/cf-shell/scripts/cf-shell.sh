@@ -61,6 +61,35 @@ random_password() {
   ( LC_ALL=C tr -dc 'A-Za-z0-9' </dev/urandom | head -c 24 ) || true
 }
 
+ensure_auth() {
+  # Set SH_BASIC_AUTH on $app if not already set; restart if we set it.
+  # Idempotent. Works whether the app came from `deploy` or a hand `cf push`.
+  local app="$1"
+  local existing
+  existing="$(app_basic_auth "$app" || true)"
+  if [[ -n "$existing" ]]; then
+    echo "cf-shell: SH_BASIC_AUTH already set ($(echo "$existing" | cut -d: -f1):***)"
+    return 0
+  fi
+  local pw cred
+  pw="$(random_password)"
+  cred="admin:$pw"
+  cf set-env "$app" SH_BASIC_AUTH "$cred" >/dev/null
+  cf restart "$app" >/dev/null
+  echo "cf-shell: SH_BASIC_AUTH set to admin:$pw"
+}
+
+cmd_secure() {
+  # Lock down an existing app's /exec with basic auth. Useful when you
+  # extended the container by re-`cf push`ing your own manifest instead
+  # of going through `deploy` — the re-push leaves the endpoint open
+  # until this is run.
+  local app="${1:-$(default_app)}"
+  cf target >/dev/null 2>&1 || die "'cf target' failed — run cf login first"
+  cf app "$app" >/dev/null 2>&1 || die "app $app not found"
+  ensure_auth "$app"
+}
+
 cmd_deploy() {
   local app="${1:-$(default_app)}"
   cf target >/dev/null 2>&1 || die "'cf target' failed — run cf login first"
@@ -88,18 +117,7 @@ EOF
   echo "cf-shell: pushing $app from $push_dir"
   ( cd "$push_dir" && cf push -f manifest.yml -p . )
 
-  local existing
-  existing="$(app_basic_auth "$app" || true)"
-  if [[ -z "$existing" ]]; then
-    local pw cred
-    pw="$(random_password)"
-    cred="admin:$pw"
-    cf set-env "$app" SH_BASIC_AUTH "$cred" >/dev/null
-    cf restart "$app" >/dev/null
-    echo "cf-shell: SH_BASIC_AUTH set to admin:$pw"
-  else
-    echo "cf-shell: SH_BASIC_AUTH preserved ($(echo "$existing" | cut -d: -f1):***)"
-  fi
+  ensure_auth "$app"
 
   local route
   route="$(app_route "$app")"
@@ -153,10 +171,12 @@ cmd_destroy() {
 
 usage() {
   cat >&2 <<EOF
-usage: cf-shell.sh <preflight|deploy|exec|url|destroy> [app] [args...]
+usage: cf-shell.sh <preflight|deploy|secure|exec|url|destroy> [app] [args...]
 
   preflight                 check cf/curl/jq, cf target, cache shell2http
-  deploy   [app]            push (or update) the shell app
+  deploy   [app]            push (or update) the shell app and set auth
+  secure   [app]            set SH_BASIC_AUTH on an existing app (idempotent).
+                            Use after a hand-rolled cf push that bypassed deploy.
   exec     [app] <cmd|->    run a command in the shell
   url      [app]            print the shell URL
   destroy  [app]            cf delete -f
@@ -173,6 +193,7 @@ main() {
   case "$sub" in
     preflight) cmd_preflight "$@" ;;
     deploy)    cmd_deploy    "$@" ;;
+    secure)    cmd_secure    "$@" ;;
     exec)      cmd_exec      "$@" ;;
     url)       cmd_url       "$@" ;;
     destroy)   cmd_destroy   "$@" ;;
