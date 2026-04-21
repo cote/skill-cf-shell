@@ -17,6 +17,10 @@ the filesystem-persists / env-doesn't model correctly." Tier 3 is "can
 the model drive a non-trivial buildpack extension from the skill's
 reference doc."
 
+For a hands-on, human-driven walkthrough of the same three tiers —
+paste commands, watch what happens in a second terminal — see
+[`DEMO.md`](DEMO.md).
+
 ## Running a scenario
 
 These need a real CF foundation, a successful `cf target`, and (for
