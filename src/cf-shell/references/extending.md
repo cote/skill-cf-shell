@@ -2,7 +2,7 @@
 
 Default deploy uses only `binary_buildpack` + `shell2http`. Base stack
 gives you bash, coreutils, curl, usually python3, awk, sed. To add
-more, edit `manifest.yml` under `~/.cache/io.cote.diane.cf-shell/push/<app>/`,
+more, edit `manifest.yml` under `~/apps/cf-shell/cache/push/<app>/`,
 drop in companion files, re-`cf push`.
 
 **`binary_buildpack` always stays last** — it provides shell2http.
@@ -72,7 +72,7 @@ available to every exec (parse with `jq`).
 
 ## After editing
 
-    cd ~/.cache/io.cote.diane.cf-shell/push/<app>
+    cd ~/apps/cf-shell/cache/push/<app>
     cf push -f manifest.yml -p .
 
 `SH_BASIC_AUTH` persists across pushes. Container filesystem is

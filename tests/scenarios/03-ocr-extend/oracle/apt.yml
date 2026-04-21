@@ -1,0 +1,6 @@
+---
+packages:
+  - tesseract-ocr
+  - tesseract-ocr-eng
+  - tesseract-ocr-spa
+  - tesseract-ocr-cat

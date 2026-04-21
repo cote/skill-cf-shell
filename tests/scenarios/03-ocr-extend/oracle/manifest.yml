@@ -1,0 +1,19 @@
+---
+# The OCR agentic shell. cflinuxfs4 base + tesseract + Python OCR stack +
+# shell2http as the HTTP front door.
+#
+# Buildpack order matters:
+#   1. apt-buildpack       installs debian packages under /home/vcap/deps/0/apt/
+#   2. python_buildpack    installs pip packages into a venv on PATH
+#   3. binary_buildpack    packages the shell2http Go binary; supplies the start command
+applications:
+  - name: larry-ocr
+    memory: 512M
+    disk_quota: 1G
+    instances: 1
+    buildpacks:
+      - https://github.com/cloudfoundry/apt-buildpack
+      - python_buildpack
+      - binary_buildpack
+    command: ./shell2http -form -export-all-vars -include-stderr -no-log-timestamp -timeout=300 -port=$PORT /exec 'bash -lc "$v_cmd"'
+    health-check-type: port

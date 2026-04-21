@@ -1,0 +1,201 @@
+timestamp,invoice_number,driver_id,store_chain,store_location,sku,cases,delivered,signed_for,problem,notes
+2026-04-17 06:01,INV-2026-744674,D-012,Albert Heijn,Eindhoven Woensel,Ball Park Angus 8pk,4,yes,yes,late,Arrived outside delivery window
+2026-04-17 06:06,INV-2026-895667,D-006,Aldi,Apeldoorn,Texas BBQ Smokehouse Franks 10pk,10,yes,yes,,
+2026-04-17 06:07,INV-2026-174441,D-002,Jumbo,Maastricht,Stars & Stripes All-Beef Franks 12pk,15,yes,yes,,
+2026-04-17 06:09,INV-2026-217308,D-003,Lidl,Nijmegen,Chicago Deep Dish Dog 6pk,10,yes,yes,,
+2026-04-17 06:14,INV-2026-842411,D-018,Plus,Delft,Texas BBQ Smokehouse Franks 10pk,5,yes,yes,,
+2026-04-17 06:14,INV-2026-679077,D-014,Jumbo,Amersfoort,Ball Park Angus 8pk,4,yes,yes,late,Arrived outside delivery window
+2026-04-17 06:19,INV-2026-368355,D-007,Coop,Alkmaar,Ball Park Angus 8pk,1,no,,missing,Order not on truck
+2026-04-17 06:29,INV-2026-618317,D-011,Coop,Gouda,Hebrew National Kosher 7pk,15,yes,yes,,
+2026-04-17 06:37,INV-2026-407696,D-007,Coop,Gouda,Chicago Deep Dish Dog 6pk,2,yes,yes,late,Arrived outside delivery window
+2026-04-17 06:42,INV-2026-464069,D-018,Jumbo,Maastricht,Ball Park Angus 8pk,2,yes,yes,damaged,Packaging crushed; units visibly damaged
+2026-04-17 06:45,INV-2026-103717,D-011,Coop,Alkmaar,Stars & Stripes All-Beef Franks 12pk,2,yes,yes,,
+2026-04-17 06:46,INV-2026-139019,D-010,Aldi,Breda,Hebrew National Kosher 7pk,5,yes,yes,,
+2026-04-17 06:46,INV-2026-331230,D-013,Vomar,Beverwijk,NY Street Cart Classic 24pk,15,yes,yes,,
+2026-04-17 06:55,INV-2026-806073,D-004,Jumbo,Leiden,Vermont Maple Breakfast Dogs 8pk,8,yes,yes,,
+2026-04-17 06:58,INV-2026-486649,D-010,Albert Heijn,Rotterdam Zuid,Oscar Mayer Deluxe 10pk,2,yes,yes,,
+2026-04-17 07:02,INV-2026-602248,D-013,Aldi,Breda,Oscar Mayer Deluxe 10pk,5,yes,yes,,
+2026-04-17 07:03,INV-2026-572407,D-004,Coop,Gouda,Vermont Maple Breakfast Dogs 8pk,15,yes,yes,,
+2026-04-17 07:17,INV-2026-564656,D-018,Lidl,Nijmegen,Hebrew National Kosher 7pk,4,no,,refused,Store refused delivery (freezer full)
+2026-04-17 07:17,INV-2026-720859,D-008,Albert Heijn,Rotterdam Zuid,Ball Park Angus 8pk,8,yes,yes,,
+2026-04-17 07:19,INV-2026-428267,D-019,Dirk van den Broek,Amsterdam West,Nathan's Famous Original 8pk,1,yes,yes,,
+2026-04-17 07:22,INV-2026-245095,D-005,Aldi,Enschede,Vermont Maple Breakfast Dogs 8pk,6,no,,refused,Store refused delivery (freezer full)
+2026-04-17 07:23,INV-2026-264686,D-008,Albert Heijn,Eindhoven Woensel,Coney Island Cheddar Dogs 8pk,4,yes,yes,,
+2026-04-17 07:23,INV-2026-385320,D-015,Jumbo,Amersfoort,Chicago Deep Dish Dog 6pk,3,yes,no,late,Arrived outside delivery window
+2026-04-17 07:33,INV-2026-592841,D-012,Plus,Delft,Ball Park Angus 8pk,8,yes,yes,,
+2026-04-17 07:41,INV-2026-979940,D-011,Aldi,Apeldoorn,Coney Island Cheddar Dogs 8pk,6,yes,yes,,
+2026-04-17 07:42,INV-2026-176819,D-018,Coop,Alkmaar,Coney Island Cheddar Dogs 8pk,1,yes,yes,,
+2026-04-17 07:42,INV-2026-565230,D-006,Aldi,Breda,Nathan's Famous Original 8pk,2,yes,yes,late,Arrived outside delivery window
+2026-04-17 07:43,INV-2026-632351,D-018,Aldi,Arnhem,Chicago Deep Dish Dog 6pk,3,yes,yes,,
+2026-04-17 07:44,INV-2026-197251,D-013,Vomar,Heemskerk,NY Street Cart Classic 24pk,3,yes,yes,,
+2026-04-17 07:48,INV-2026-755674,D-010,Coop,Gouda,NY Street Cart Classic 24pk,12,yes,yes,late,Arrived outside delivery window
+2026-04-17 07:52,INV-2026-793169,D-001,Albert Heijn,Rotterdam Zuid,Chicago Deep Dish Dog 6pk,3,yes,yes,,
+2026-04-17 07:58,INV-2026-212235,D-018,Albert Heijn,Eindhoven Woensel,NY Street Cart Classic 24pk,2,yes,yes,temp_excursion,Cold chain breach - above 4C at unload
+2026-04-17 08:01,INV-2026-685181,D-014,Lidl,Zwolle,NY Street Cart Classic 24pk,2,no,,address_error,Wrong branch address on manifest
+2026-04-17 08:03,INV-2026-359947,D-008,Aldi,Enschede,Nathan's Famous Original 8pk,6,yes,yes,,
+2026-04-17 08:05,INV-2026-989227,D-015,Jumbo,Maastricht,Oscar Mayer Deluxe 10pk,6,yes,yes,,
+2026-04-17 08:08,INV-2026-925206,D-019,Jumbo,Groningen,Ball Park Angus 8pk,1,yes,yes,,
+2026-04-17 08:09,INV-2026-768854,D-016,Lidl,Nijmegen,Stars & Stripes All-Beef Franks 12pk,1,yes,yes,,
+2026-04-17 08:10,INV-2026-143860,D-010,Lidl,Zwolle,Stars & Stripes All-Beef Franks 12pk,6,yes,yes,,
+2026-04-17 08:14,INV-2026-194511,D-010,Jumbo,Amersfoort,NY Street Cart Classic 24pk,10,yes,yes,,
+2026-04-17 08:18,INV-2026-507524,D-015,Coop,Gouda,Coney Island Cheddar Dogs 8pk,4,no,,refused,Store refused delivery (freezer full)
+2026-04-17 08:30,INV-2026-971415,D-014,Jumbo,Maastricht,Coney Island Cheddar Dogs 8pk,3,yes,yes,,
+2026-04-17 08:37,INV-2026-622584,D-010,Jumbo,Groningen,Coney Island Cheddar Dogs 8pk,10,yes,yes,temp_excursion,Cold chain breach - above 4C at unload
+2026-04-17 09:04,INV-2026-671971,D-010,Vomar,Beverwijk,Nathan's Famous Original 8pk,15,no,,address_error,Wrong branch address on manifest
+2026-04-17 09:05,INV-2026-971728,D-020,Albert Heijn,Rotterdam Zuid,Ball Park Angus 8pk,3,yes,yes,,
+2026-04-17 09:08,INV-2026-153872,D-009,Jumbo,Amersfoort,Ball Park Angus 8pk,5,yes,yes,,
+2026-04-17 09:37,INV-2026-262246,D-016,Albert Heijn,Rotterdam Zuid,Ball Park Angus 8pk,5,yes,yes,,
+2026-04-17 09:39,INV-2026-458332,D-016,Jumbo,Leiden,Oscar Mayer Deluxe 10pk,6,yes,yes,,
+2026-04-17 09:47,INV-2026-309267,D-015,Lidl,Zaandam,Nathan's Famous Original 8pk,1,yes,yes,wrong_quantity,Case count short vs PO
+2026-04-17 09:58,INV-2026-444519,D-005,Aldi,Breda,Oscar Mayer Deluxe 10pk,4,yes,yes,,
+2026-04-17 10:01,INV-2026-997004,D-012,Vomar,Heemskerk,Stars & Stripes All-Beef Franks 12pk,6,yes,yes,,
+2026-04-17 10:03,INV-2026-415779,D-004,Lidl,Zwolle,Ball Park Angus 8pk,12,yes,yes,,
+2026-04-17 10:09,INV-2026-556839,D-019,Coop,Alkmaar,Coney Island Cheddar Dogs 8pk,8,yes,yes,wrong_quantity,Case count short vs PO
+2026-04-17 10:18,INV-2026-975467,D-003,Dirk van den Broek,Purmerend,Nathan's Famous Original 8pk,5,yes,yes,late,Arrived outside delivery window
+2026-04-17 10:18,INV-2026-438977,D-004,Plus,Dordrecht,Nathan's Famous Original 8pk,12,yes,yes,,
+2026-04-17 10:18,INV-2026-858889,D-020,Dirk van den Broek,Amsterdam West,Vermont Maple Breakfast Dogs 8pk,2,yes,yes,,
+2026-04-17 10:19,INV-2026-883618,D-001,Albert Heijn,Den Haag HS,Hebrew National Kosher 7pk,1,yes,yes,,
+2026-04-17 10:22,INV-2026-904150,D-012,Lidl,Haarlem,Coney Island Cheddar Dogs 8pk,15,yes,yes,temp_excursion,Cold chain breach - above 4C at unload
+2026-04-17 10:31,INV-2026-154944,D-005,Lidl,Zaandam,Vermont Maple Breakfast Dogs 8pk,4,yes,no,,
+2026-04-17 10:32,INV-2026-966785,D-005,Aldi,Apeldoorn,Coney Island Cheddar Dogs 8pk,12,yes,yes,,
+2026-04-17 10:33,INV-2026-960408,D-001,Lidl,Zaandam,NY Street Cart Classic 24pk,8,yes,yes,,
+2026-04-17 10:33,INV-2026-940064,D-003,Dirk van den Broek,Amsterdam West,Hebrew National Kosher 7pk,10,yes,yes,,
+2026-04-17 11:00,INV-2026-555884,D-006,Albert Heijn,Amsterdam Centrum,Oscar Mayer Deluxe 10pk,5,yes,yes,late,Arrived outside delivery window
+2026-04-17 11:02,INV-2026-123005,D-013,Aldi,Apeldoorn,Ball Park Angus 8pk,6,yes,yes,,
+2026-04-17 11:10,INV-2026-935012,D-009,Dirk van den Broek,Purmerend,Chicago Deep Dish Dog 6pk,10,yes,yes,,
+2026-04-17 11:16,INV-2026-456331,D-012,Albert Heijn,Eindhoven Woensel,NY Street Cart Classic 24pk,1,yes,yes,,
+2026-04-17 11:17,INV-2026-787923,D-013,Lidl,Nijmegen,Coney Island Cheddar Dogs 8pk,15,yes,yes,,
+2026-04-17 11:18,INV-2026-213349,D-019,Lidl,Zwolle,Ball Park Angus 8pk,2,yes,yes,late,Arrived outside delivery window
+2026-04-17 11:23,INV-2026-225362,D-018,Coop,Alkmaar,NY Street Cart Classic 24pk,5,yes,yes,,
+2026-04-17 11:32,INV-2026-280222,D-020,Vomar,Heemskerk,Nathan's Famous Original 8pk,5,yes,no,,
+2026-04-17 11:35,INV-2026-321941,D-015,Jumbo,Leiden,Chicago Deep Dish Dog 6pk,10,yes,yes,,
+2026-04-17 11:36,INV-2026-392136,D-003,Dirk van den Broek,Purmerend,Texas BBQ Smokehouse Franks 10pk,4,yes,yes,,
+2026-04-17 11:36,INV-2026-952686,D-005,Lidl,Zwolle,Coney Island Cheddar Dogs 8pk,5,yes,yes,,
+2026-04-17 11:37,INV-2026-531641,D-016,Vomar,Heemskerk,Vermont Maple Breakfast Dogs 8pk,2,yes,yes,wrong_quantity,Case count short vs PO
+2026-04-17 11:39,INV-2026-128941,D-004,Plus,Hilversum,Oscar Mayer Deluxe 10pk,8,yes,yes,,
+2026-04-17 11:39,INV-2026-205239,D-015,Vomar,Beverwijk,Hebrew National Kosher 7pk,1,yes,yes,,
+2026-04-17 11:43,INV-2026-197923,D-008,Coop,Gouda,Coney Island Cheddar Dogs 8pk,5,yes,yes,,
+2026-04-17 11:44,INV-2026-801364,D-013,Aldi,Apeldoorn,Texas BBQ Smokehouse Franks 10pk,5,yes,no,,
+2026-04-17 11:53,INV-2026-863934,D-011,Plus,Delft,Ball Park Angus 8pk,5,yes,yes,,
+2026-04-17 11:57,INV-2026-468154,D-005,Jumbo,Tilburg,Oscar Mayer Deluxe 10pk,4,no,,missing,Order not on truck
+2026-04-17 11:58,INV-2026-335113,D-003,Coop,Gouda,Oscar Mayer Deluxe 10pk,1,no,,address_error,Wrong branch address on manifest
+2026-04-17 12:02,INV-2026-918011,D-018,Dirk van den Broek,Amsterdam West,Vermont Maple Breakfast Dogs 8pk,4,yes,yes,,
+2026-04-17 12:02,INV-2026-797660,D-014,Albert Heijn,Eindhoven Woensel,Oscar Mayer Deluxe 10pk,12,yes,yes,,
+2026-04-17 12:10,INV-2026-752878,D-016,Vomar,Beverwijk,Oscar Mayer Deluxe 10pk,10,yes,yes,,
+2026-04-17 12:14,INV-2026-656639,D-017,Dirk van den Broek,Purmerend,Chicago Deep Dish Dog 6pk,4,yes,yes,,
+2026-04-17 12:17,INV-2026-805511,D-009,Dirk van den Broek,Amsterdam West,Nathan's Famous Original 8pk,1,yes,yes,,
+2026-04-17 12:18,INV-2026-426775,D-011,Jumbo,Tilburg,Texas BBQ Smokehouse Franks 10pk,8,yes,yes,,
+2026-04-17 12:23,INV-2026-551607,D-005,Plus,Delft,Stars & Stripes All-Beef Franks 12pk,6,yes,yes,damaged,Packaging crushed; units visibly damaged
+2026-04-17 12:29,INV-2026-658453,D-008,Dirk van den Broek,Amsterdam West,Stars & Stripes All-Beef Franks 12pk,10,yes,yes,late,Arrived outside delivery window
+2026-04-17 12:32,INV-2026-299869,D-020,Plus,Hilversum,Hebrew National Kosher 7pk,10,yes,yes,,
+2026-04-17 12:45,INV-2026-626392,D-012,Jumbo,Groningen,Hebrew National Kosher 7pk,6,yes,yes,temp_excursion,Cold chain breach - above 4C at unload
+2026-04-17 12:48,INV-2026-536196,D-004,Aldi,Apeldoorn,Hebrew National Kosher 7pk,4,yes,yes,,
+2026-04-17 12:49,INV-2026-355836,D-005,Coop,Alkmaar,Ball Park Angus 8pk,4,yes,yes,late,Arrived outside delivery window
+2026-04-17 12:50,INV-2026-380746,D-003,Aldi,Enschede,Stars & Stripes All-Beef Franks 12pk,4,yes,yes,damaged,Packaging crushed; units visibly damaged
+2026-04-17 12:56,INV-2026-299659,D-004,Lidl,Zwolle,Ball Park Angus 8pk,10,yes,yes,,
+2026-04-17 13:08,INV-2026-269930,D-007,Dirk van den Broek,Purmerend,Hebrew National Kosher 7pk,5,yes,yes,late,Arrived outside delivery window
+2026-04-17 13:09,INV-2026-789305,D-019,Jumbo,Tilburg,Texas BBQ Smokehouse Franks 10pk,15,yes,yes,,
+2026-04-17 13:10,INV-2026-962276,D-016,Vomar,Heemskerk,Coney Island Cheddar Dogs 8pk,12,yes,no,,
+2026-04-17 13:19,INV-2026-420214,D-019,Aldi,Apeldoorn,Hebrew National Kosher 7pk,10,yes,yes,,
+2026-04-17 13:26,INV-2026-101773,D-017,Vomar,Beverwijk,Nathan's Famous Original 8pk,15,yes,no,,
+2026-04-17 13:28,INV-2026-832168,D-016,Coop,Gouda,Texas BBQ Smokehouse Franks 10pk,5,yes,yes,,
+2026-04-17 13:29,INV-2026-649525,D-017,Dirk van den Broek,Amsterdam West,Oscar Mayer Deluxe 10pk,3,yes,yes,,
+2026-04-17 13:30,INV-2026-181247,D-010,Plus,Delft,NY Street Cart Classic 24pk,12,yes,yes,,
+2026-04-17 13:32,INV-2026-563638,D-007,Plus,Delft,Nathan's Famous Original 8pk,15,yes,yes,,
+2026-04-17 13:34,INV-2026-740255,D-010,Lidl,Haarlem,Stars & Stripes All-Beef Franks 12pk,8,yes,yes,,
+2026-04-17 13:39,INV-2026-246991,D-014,Albert Heijn,Den Haag HS,Vermont Maple Breakfast Dogs 8pk,2,yes,yes,,
+2026-04-17 13:49,INV-2026-249811,D-009,Aldi,Enschede,Texas BBQ Smokehouse Franks 10pk,10,yes,yes,,
+2026-04-17 13:50,INV-2026-662275,D-004,Jumbo,Maastricht,Vermont Maple Breakfast Dogs 8pk,15,yes,no,,
+2026-04-17 13:50,INV-2026-367729,D-001,Aldi,Apeldoorn,Ball Park Angus 8pk,3,yes,yes,,
+2026-04-17 13:59,INV-2026-654816,D-009,Lidl,Haarlem,Ball Park Angus 8pk,2,yes,yes,,
+2026-04-17 14:00,INV-2026-975679,D-007,Coop,Gouda,Oscar Mayer Deluxe 10pk,4,yes,yes,,
+2026-04-17 14:03,INV-2026-829884,D-005,Lidl,Almere,Stars & Stripes All-Beef Franks 12pk,5,no,,missing,Order not on truck
+2026-04-17 14:06,INV-2026-740967,D-003,Plus,Delft,Texas BBQ Smokehouse Franks 10pk,3,yes,yes,,
+2026-04-17 14:17,INV-2026-955662,D-003,Aldi,Breda,Texas BBQ Smokehouse Franks 10pk,15,yes,yes,temp_excursion,Cold chain breach - above 4C at unload
+2026-04-17 14:25,INV-2026-559023,D-003,Jumbo,Leiden,NY Street Cart Classic 24pk,8,yes,yes,temp_excursion,Cold chain breach - above 4C at unload
+2026-04-17 14:37,INV-2026-731262,D-001,Jumbo,Tilburg,Nathan's Famous Original 8pk,1,yes,yes,,
+2026-04-17 14:44,INV-2026-219346,D-012,Vomar,Heemskerk,Ball Park Angus 8pk,10,yes,yes,,
+2026-04-17 14:50,INV-2026-587115,D-002,Albert Heijn,Amsterdam Centrum,Nathan's Famous Original 8pk,4,yes,yes,,
+2026-04-17 14:51,INV-2026-783157,D-015,Albert Heijn,Rotterdam Zuid,Ball Park Angus 8pk,1,yes,yes,late,Arrived outside delivery window
+2026-04-17 14:58,INV-2026-670511,D-017,Aldi,Apeldoorn,Chicago Deep Dish Dog 6pk,2,yes,yes,,
+2026-04-17 15:03,INV-2026-100599,D-020,Aldi,Arnhem,Vermont Maple Breakfast Dogs 8pk,3,yes,yes,,
+2026-04-17 15:15,INV-2026-588557,D-014,Aldi,Apeldoorn,Chicago Deep Dish Dog 6pk,4,yes,yes,,
+2026-04-17 15:23,INV-2026-446859,D-012,Dirk van den Broek,Purmerend,Oscar Mayer Deluxe 10pk,12,yes,yes,,
+2026-04-17 15:27,INV-2026-233470,D-007,Plus,Dordrecht,NY Street Cart Classic 24pk,8,yes,yes,,
+2026-04-17 15:27,INV-2026-930281,D-002,Jumbo,Amersfoort,Ball Park Angus 8pk,15,yes,yes,,
+2026-04-17 15:27,INV-2026-207573,D-017,Lidl,Nijmegen,Stars & Stripes All-Beef Franks 12pk,10,no,,refused,Store refused delivery (freezer full)
+2026-04-17 15:28,INV-2026-894993,D-008,Albert Heijn,Eindhoven Woensel,Texas BBQ Smokehouse Franks 10pk,2,yes,yes,,
+2026-04-17 15:32,INV-2026-724377,D-011,Aldi,Breda,Hebrew National Kosher 7pk,3,yes,yes,damaged,Packaging crushed; units visibly damaged
+2026-04-17 15:34,INV-2026-443939,D-020,Vomar,Heemskerk,Coney Island Cheddar Dogs 8pk,4,yes,yes,,
+2026-04-17 15:47,INV-2026-337144,D-014,Aldi,Breda,Vermont Maple Breakfast Dogs 8pk,12,yes,yes,,
+2026-04-17 15:53,INV-2026-871476,D-018,Vomar,Heemskerk,Chicago Deep Dish Dog 6pk,4,yes,yes,,
+2026-04-17 15:58,INV-2026-829308,D-001,Albert Heijn,Utrecht Centraal,Nathan's Famous Original 8pk,8,no,,missing,Order not on truck
+2026-04-17 16:01,INV-2026-413685,D-014,Coop,Alkmaar,Oscar Mayer Deluxe 10pk,3,yes,yes,,
+2026-04-17 16:06,INV-2026-691807,D-001,Lidl,Haarlem,Chicago Deep Dish Dog 6pk,15,yes,yes,,
+2026-04-17 16:07,INV-2026-214351,D-015,Vomar,Beverwijk,Coney Island Cheddar Dogs 8pk,10,yes,yes,,
+2026-04-17 16:08,INV-2026-592738,D-010,Lidl,Zwolle,Coney Island Cheddar Dogs 8pk,3,yes,yes,,
+2026-04-17 16:11,INV-2026-656329,D-010,Lidl,Nijmegen,Ball Park Angus 8pk,15,yes,yes,,
+2026-04-17 16:21,INV-2026-543692,D-007,Lidl,Almere,Hebrew National Kosher 7pk,12,yes,yes,,
+2026-04-17 16:22,INV-2026-255539,D-003,Vomar,Beverwijk,Hebrew National Kosher 7pk,10,yes,yes,,
+2026-04-17 16:36,INV-2026-259784,D-008,Albert Heijn,Amsterdam Centrum,Texas BBQ Smokehouse Franks 10pk,4,yes,yes,wrong_quantity,Case count short vs PO
+2026-04-17 16:38,INV-2026-429164,D-004,Aldi,Enschede,Nathan's Famous Original 8pk,2,yes,yes,temp_excursion,Cold chain breach - above 4C at unload
+2026-04-17 16:46,INV-2026-817644,D-010,Vomar,Heemskerk,Hebrew National Kosher 7pk,12,yes,no,,
+2026-04-17 17:06,INV-2026-906315,D-018,Coop,Alkmaar,Coney Island Cheddar Dogs 8pk,2,yes,yes,wrong_quantity,Case count short vs PO
+2026-04-17 17:10,INV-2026-261859,D-003,Jumbo,Tilburg,Hebrew National Kosher 7pk,1,yes,yes,late,Arrived outside delivery window
+2026-04-17 17:10,INV-2026-203831,D-016,Dirk van den Broek,Purmerend,Ball Park Angus 8pk,3,no,,refused,Store refused delivery (freezer full)
+2026-04-17 17:25,INV-2026-608993,D-007,Aldi,Breda,Stars & Stripes All-Beef Franks 12pk,6,yes,yes,,
+2026-04-17 17:26,INV-2026-379946,D-003,Vomar,Heemskerk,Hebrew National Kosher 7pk,6,yes,yes,,
+2026-04-17 17:27,INV-2026-776856,D-010,Dirk van den Broek,Purmerend,Texas BBQ Smokehouse Franks 10pk,6,yes,yes,,
+2026-04-17 17:30,INV-2026-976566,D-019,Albert Heijn,Den Haag HS,Vermont Maple Breakfast Dogs 8pk,15,yes,yes,,
+2026-04-17 17:32,INV-2026-876646,D-018,Jumbo,Amersfoort,NY Street Cart Classic 24pk,4,yes,yes,,
+2026-04-17 17:35,INV-2026-726928,D-002,Lidl,Nijmegen,Vermont Maple Breakfast Dogs 8pk,5,yes,yes,,
+2026-04-17 17:42,INV-2026-156213,D-005,Coop,Gouda,Coney Island Cheddar Dogs 8pk,8,yes,yes,,
+2026-04-17 17:43,INV-2026-765046,D-009,Lidl,Nijmegen,NY Street Cart Classic 24pk,15,yes,yes,,
+2026-04-17 17:43,INV-2026-344762,D-009,Albert Heijn,Utrecht Centraal,NY Street Cart Classic 24pk,5,yes,yes,late,Arrived outside delivery window
+2026-04-17 17:48,INV-2026-355123,D-010,Coop,Alkmaar,Hebrew National Kosher 7pk,1,yes,yes,,
+2026-04-17 18:02,INV-2026-950823,D-013,Aldi,Apeldoorn,Texas BBQ Smokehouse Franks 10pk,8,yes,yes,,
+2026-04-17 18:18,INV-2026-904751,D-005,Aldi,Enschede,Texas BBQ Smokehouse Franks 10pk,4,yes,yes,,
+2026-04-17 18:21,INV-2026-807166,D-013,Coop,Gouda,Chicago Deep Dish Dog 6pk,4,yes,yes,wrong_quantity,Case count short vs PO
+2026-04-17 18:31,INV-2026-647091,D-009,Jumbo,Leiden,Vermont Maple Breakfast Dogs 8pk,10,yes,yes,late,Arrived outside delivery window
+2026-04-17 18:38,INV-2026-763928,D-001,Albert Heijn,Utrecht Centraal,Chicago Deep Dish Dog 6pk,15,yes,no,,
+2026-04-17 18:41,INV-2026-597732,D-015,Coop,Alkmaar,Oscar Mayer Deluxe 10pk,10,no,,refused,Store refused delivery (freezer full)
+2026-04-17 18:41,INV-2026-561097,D-013,Plus,Delft,Vermont Maple Breakfast Dogs 8pk,8,no,,refused,Store refused delivery (freezer full)
+2026-04-17 18:43,INV-2026-620856,D-010,Plus,Delft,Ball Park Angus 8pk,1,no,,missing,Order not on truck
+2026-04-17 18:58,INV-2026-650121,D-020,Lidl,Almere,Texas BBQ Smokehouse Franks 10pk,10,yes,yes,,
+2026-04-17 18:58,INV-2026-896028,D-003,Aldi,Breda,Chicago Deep Dish Dog 6pk,5,yes,yes,,
+2026-04-17 19:02,INV-2026-367931,D-010,Albert Heijn,Amsterdam Centrum,Texas BBQ Smokehouse Franks 10pk,5,yes,yes,temp_excursion,Cold chain breach - above 4C at unload
+2026-04-17 19:10,INV-2026-710169,D-011,Dirk van den Broek,Amsterdam West,Vermont Maple Breakfast Dogs 8pk,4,yes,yes,late,Arrived outside delivery window
+2026-04-17 19:17,INV-2026-276299,D-003,Vomar,Beverwijk,Nathan's Famous Original 8pk,5,yes,yes,late,Arrived outside delivery window
+2026-04-17 19:23,INV-2026-577110,D-010,Vomar,Beverwijk,Nathan's Famous Original 8pk,5,no,,missing,Order not on truck
+2026-04-17 19:46,INV-2026-785743,D-017,Plus,Delft,Hebrew National Kosher 7pk,12,yes,yes,late,Arrived outside delivery window
+2026-04-17 19:50,INV-2026-285652,D-014,Vomar,Beverwijk,Texas BBQ Smokehouse Franks 10pk,3,no,,address_error,Wrong branch address on manifest
+2026-04-17 19:50,INV-2026-360222,D-009,Albert Heijn,Utrecht Centraal,Vermont Maple Breakfast Dogs 8pk,8,yes,yes,damaged,Packaging crushed; units visibly damaged
+2026-04-17 19:51,INV-2026-236435,D-018,Jumbo,Amersfoort,Coney Island Cheddar Dogs 8pk,8,yes,yes,,
+2026-04-17 19:54,INV-2026-669408,D-016,Albert Heijn,Utrecht Centraal,Stars & Stripes All-Beef Franks 12pk,6,yes,yes,temp_excursion,Cold chain breach - above 4C at unload
+2026-04-17 20:10,INV-2026-190872,D-009,Coop,Alkmaar,Nathan's Famous Original 8pk,15,yes,yes,,
+2026-04-17 20:10,INV-2026-916990,D-015,Lidl,Zaandam,Vermont Maple Breakfast Dogs 8pk,12,yes,yes,,
+2026-04-17 20:13,INV-2026-100425,D-010,Vomar,Heemskerk,Chicago Deep Dish Dog 6pk,15,yes,yes,,
+2026-04-17 20:29,INV-2026-347861,D-006,Jumbo,Amersfoort,Oscar Mayer Deluxe 10pk,1,yes,yes,temp_excursion,Cold chain breach - above 4C at unload
+2026-04-17 20:32,INV-2026-444525,D-018,Coop,Alkmaar,Vermont Maple Breakfast Dogs 8pk,15,yes,yes,,
+2026-04-17 20:33,INV-2026-656926,D-006,Albert Heijn,Rotterdam Zuid,Stars & Stripes All-Beef Franks 12pk,1,yes,yes,,
+2026-04-17 20:33,INV-2026-606680,D-004,Plus,Hilversum,NY Street Cart Classic 24pk,4,no,,address_error,Wrong branch address on manifest
+2026-04-17 20:35,INV-2026-344098,D-004,Aldi,Breda,Stars & Stripes All-Beef Franks 12pk,4,yes,yes,late,Arrived outside delivery window
+2026-04-17 20:41,INV-2026-214975,D-005,Dirk van den Broek,Amsterdam West,Chicago Deep Dish Dog 6pk,12,yes,yes,,
+2026-04-17 20:42,INV-2026-479201,D-019,Vomar,Beverwijk,Oscar Mayer Deluxe 10pk,5,yes,yes,damaged,Packaging crushed; units visibly damaged
+2026-04-17 20:42,INV-2026-346629,D-013,Albert Heijn,Eindhoven Woensel,Coney Island Cheddar Dogs 8pk,3,yes,no,,
+2026-04-17 20:46,INV-2026-255813,D-015,Plus,Dordrecht,NY Street Cart Classic 24pk,15,yes,yes,,
+2026-04-17 20:46,INV-2026-787584,D-011,Plus,Delft,Texas BBQ Smokehouse Franks 10pk,5,yes,yes,,
+2026-04-17 20:51,INV-2026-501126,D-020,Aldi,Apeldoorn,Ball Park Angus 8pk,3,yes,yes,,
+2026-04-17 20:51,INV-2026-455168,D-004,Plus,Delft,NY Street Cart Classic 24pk,10,yes,yes,temp_excursion,Cold chain breach - above 4C at unload
+2026-04-17 20:59,INV-2026-972064,D-010,Dirk van den Broek,Purmerend,Stars & Stripes All-Beef Franks 12pk,2,no,,missing,Order not on truck
+2026-04-17 21:00,INV-2026-356150,D-012,Aldi,Enschede,Chicago Deep Dish Dog 6pk,6,no,,refused,Store refused delivery (freezer full)
+2026-04-17 21:01,INV-2026-725113,D-009,Lidl,Haarlem,Texas BBQ Smokehouse Franks 10pk,6,yes,yes,damaged,Packaging crushed; units visibly damaged
+2026-04-17 21:13,INV-2026-976325,D-014,Vomar,Heemskerk,Stars & Stripes All-Beef Franks 12pk,6,yes,yes,,
+2026-04-17 21:19,INV-2026-711878,D-013,Lidl,Almere,Oscar Mayer Deluxe 10pk,12,yes,yes,,
+2026-04-17 21:24,INV-2026-161483,D-006,Vomar,Heemskerk,Hebrew National Kosher 7pk,4,yes,yes,wrong_quantity,Case count short vs PO
+2026-04-17 21:26,INV-2026-624108,D-020,Albert Heijn,Utrecht Centraal,Nathan's Famous Original 8pk,15,yes,yes,,
+2026-04-17 21:43,INV-2026-402630,D-015,Jumbo,Amersfoort,Chicago Deep Dish Dog 6pk,5,yes,yes,,
+2026-04-17 21:45,INV-2026-597305,D-003,Dirk van den Broek,Purmerend,Vermont Maple Breakfast Dogs 8pk,5,yes,yes,,
+2026-04-17 21:46,INV-2026-691912,D-020,Lidl,Haarlem,Hebrew National Kosher 7pk,15,yes,yes,late,Arrived outside delivery window
+2026-04-17 21:47,INV-2026-771088,D-018,Lidl,Zwolle,Texas BBQ Smokehouse Franks 10pk,3,yes,yes,,
+2026-04-17 21:55,INV-2026-437408,D-007,Coop,Alkmaar,Vermont Maple Breakfast Dogs 8pk,12,yes,yes,late,Arrived outside delivery window
