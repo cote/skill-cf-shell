@@ -17,6 +17,12 @@ Tiny CF app that exposes `bash` over HTTPS via
 [shell2http](https://github.com/msoap/shell2http). POST a command,
 get stdout+stderr back. Each call is a fresh `bash -lc`.
 
+**The dispatcher is a convenience, not a gate.** `scripts/cf-shell.sh`
+wraps the common deploy+auth+exec loop, but you can do everything
+with `cf` directly — and you'll usually want to when extending
+manifests or binding services. See `references/cf-cheatsheet.md`
+for the subset of `cf` that's useful here.
+
 ## Actions
 
 One dispatcher with subcommands. Default app name is `cf-shell`
@@ -29,6 +35,10 @@ One dispatcher with subcommands. Default app name is `cf-shell`
     scripts/cf-shell.sh exec     [app] -           # read cmd from stdin
     scripts/cf-shell.sh url      [app]
     scripts/cf-shell.sh destroy  [app]
+
+Plus a helper:
+
+    scripts/upload.sh <local-path> [app] [remote-path]
 
 - **preflight** — verifies `cf` / `curl` / `jq`, `cf target`, and
   downloads `shell2http` into a local cache if missing.
@@ -45,6 +55,10 @@ One dispatcher with subcommands. Default app name is `cf-shell`
   the `X-Shell2http-Exit-Code` header).
 - **url** — prints the `https://...` route.
 - **destroy** — `cf delete -f <app>`.
+- **upload** (helper) — chunked-base64 upload of a local file into
+  `/home/vcap/app/data/in/<basename>` (or a custom remote path).
+  Use this for anything over ~50 KB, where a single form-POST
+  won't fit.
 
 ## CF-side start command
 
@@ -57,6 +71,25 @@ One dispatcher with subcommands. Default app name is `cf-shell`
 Need tools beyond the base stack (apt packages, Python libs)? Edit the
 pushed `manifest.yml` to add buildpacks in front of `binary_buildpack`
 and drop in the companion files. See `references/extending.md`.
+
+## Reducing permission prompts
+
+Most of the permission prompts this skill triggers are for read-only
+`cf` calls (`cf apps`, `cf env`, `cf logs`, `cf curl /v3/...`) or
+safe deploy/run calls (`cf push`, `cf set-env`, `cf restart`).
+`assets/settings.json.template` is a copy-paste allowlist for
+those, grouped by risk level. Drop into project `.claude/settings.json`
+(or global `~/.claude/settings.json`) and strip the `__doc__` key.
+Destructive calls (`cf delete*`, `cf auth`) are intentionally NOT
+allowlisted — they always prompt.
+
+## Keeping everything in one dir
+
+Set `CF_SHELL_CACHE=$PWD/.cf-shell` in the terminal that will run
+`claude`. The skill's shell2http cache and push dirs follow the
+project instead of landing in `~/.cache/cf-shell/`. Combined with
+the allowlist above, a single project-scoped permission rule covers
+the whole skill.
 
 ## Limits
 

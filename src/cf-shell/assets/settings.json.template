@@ -1,0 +1,45 @@
+{
+  "__doc__": [
+    "cf-shell permission allowlist template.",
+    "Copy the entries below into .claude/settings.json (project-local)",
+    "or ~/.claude/settings.json (global). Destructive commands (cf delete,",
+    "cf delete-service, cf auth, cf login) are deliberately NOT allowed —",
+    "they always prompt, by design.",
+    "Strip this __doc__ key before using; Claude Code settings.json doesn't",
+    "recognize it."
+  ],
+  "permissions": {
+    "allow": [
+      "Bash(cf target)",
+      "Bash(cf target *)",
+      "Bash(cf apps)",
+      "Bash(cf app *)",
+      "Bash(cf env *)",
+      "Bash(cf logs *)",
+      "Bash(cf routes)",
+      "Bash(cf services)",
+      "Bash(cf service *)",
+      "Bash(cf marketplace)",
+      "Bash(cf marketplace *)",
+      "Bash(cf curl /v3/*)",
+      "Bash(cf orgs)",
+      "Bash(cf spaces)",
+      "Bash(cf push *)",
+      "Bash(cf set-env *)",
+      "Bash(cf unset-env *)",
+      "Bash(cf restart *)",
+      "Bash(cf restage *)",
+      "Bash(cf start *)",
+      "Bash(cf stop *)",
+      "Bash(cf create-service *)",
+      "Bash(cf bind-service *)",
+      "Bash(cf unbind-service *)",
+      "Bash(*cf-shell.sh preflight*)",
+      "Bash(*cf-shell.sh deploy *)",
+      "Bash(*cf-shell.sh secure *)",
+      "Bash(*cf-shell.sh exec *)",
+      "Bash(*cf-shell.sh url *)",
+      "Bash(*cf-shell.sh upload *)"
+    ]
+  }
+}
