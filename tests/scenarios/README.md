@@ -41,6 +41,21 @@ run. Log the grade somewhere — a line in `~/diane2/logs/diane/system.log`
 or a short note in this directory — so regressions across skill
 revisions are visible.
 
+## Cleanup
+
+`cleanup.sh` tears down anything the scenarios left behind in the
+current `cf target` — but only names matching `cfsh-*`. It never
+touches other apps or services.
+
+```
+./cleanup.sh           # interactive — lists what it will delete, prompts
+./cleanup.sh --yes     # same, no prompt
+KEEP_LOCAL=1 ./cleanup.sh --yes   # leave the ~/.cache/cf-shell/push/ dirs
+```
+
+It reports "nothing to clean up" when there's nothing matching, so it
+is safe to run at the start or end of any scenario session.
+
 ## Known costs
 
 - Scenarios 1 and 2: one `cf push` each, quick (binary_buildpack only,
