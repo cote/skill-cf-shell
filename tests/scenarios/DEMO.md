@@ -13,13 +13,19 @@ cf target
 Must show a logged-in API endpoint, org, space. If not, `cf login`
 and come back.
 
-Alias the dispatcher so the commands below stay readable:
+Save the long path to the dispatcher in a shell variable so the
+commands below stay short:
 
 ```bash
 CFS=~/.claude/skills/cf-shell/scripts/cf-shell.sh
 ```
 
-(Re-export `CFS` in every new shell you use during the demo.)
+After that, `bash $CFS deploy foo` expands to
+`bash /Users/cote/.claude/skills/cf-shell/scripts/cf-shell.sh deploy foo`.
+This variable only lives in the current shell — if you open a new
+tab, run the same line again. If you'd rather just paste the full
+path every time, skip this and replace every `$CFS` below with
+`~/.claude/skills/cf-shell/scripts/cf-shell.sh`.
 
 ## Suggested terminal layout
 
