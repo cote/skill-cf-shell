@@ -77,6 +77,55 @@ and launch `claude` in another fresh shell, you're still fine because
 it to one terminal avoids the "which `cf target` am I on?" confusion
 during the demo.
 
+## 3a. Open two observation shells
+
+Before you start asking Claude to do real work, open **two more
+terminals** so you can see CF-side activity as it happens. Three
+panes total:
+
+- **Pane 1** — this is where `claude` is already running.
+- **Pane 2** — live log tail. Once Claude has deployed an app (after
+  step 5, first turn), run:
+  ```bash
+  cf logs <app-name>          # no --recent — live tail
+  ```
+  The log stream multiplexes several prefixes, each one useful:
+
+  | Prefix | What it is | When it fires |
+  |---|---|---|
+  | `STG/0` | Staging (buildpack output) | During every `cf push` |
+  | `CELL/0` | Cell lifecycle | Container create / start / destroy |
+  | `APP/PROC/WEB/0` | App stdout/stderr | shell2http logs every request it serves |
+  | `RTR/0` | Router access log | One line per HTTP request to the public route |
+  | `API/0` | Control-plane events | `cf set-env`, `cf restart`, etc. |
+
+  If the firehose is too noisy, filter to just HTTP activity:
+  ```bash
+  cf logs <app-name> | grep RTR
+  ```
+  One line per `exec` Claude runs — very demo-friendly.
+
+- **Pane 3** — audit / governance view. Same caveat (wait for an
+  app to exist first):
+  ```bash
+  watch -n 5 cf events <app-name>
+  ```
+  `cf events` lists the audit trail:
+  `audit.app.create`, `audit.app.update`, `audit.app.upload`,
+  `audit.app.restart`, `audit.app.delete` — each with a timestamp
+  and the actor (`agent-cote` in this demo). Updates every 5s. This
+  is the view a platform team would point at for "who pushed what,
+  when." Pair it with `cf logs` and you get both the what (logs)
+  and the why (audit events) of everything Claude triggers.
+
+**Chicken-and-egg note:** neither `cf logs` nor `cf events` works
+without an app name, so panes 2 and 3 stay empty until Claude's
+first deploy in step 5. Once it prints `cf-shell: ready at
+https://<app>.apps.<domain>/exec`, take that app name and fire up
+both tails. You'll miss the initial push staging that way — if you
+want that too, ask Claude to pause after preflight and run `cf logs
+<intended-app-name>` yourself *before* telling it to continue.
+
 ## 4. Ask Claude to confirm it has CF access
 
 Opening turn, plain English:
