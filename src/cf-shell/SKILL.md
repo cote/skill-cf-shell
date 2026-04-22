@@ -86,15 +86,11 @@ for those. Drop it into `.claude/settings.json`,
 `cf auth`) are intentionally NOT allowlisted  -  they always prompt.
 See `README.md` for setup examples.
 
-## Keeping everything in one dir
+## Additional directory: cache
 
 By default, caching is done [XDG style](https://specifications.freedesktop.org/basedir/latest/)
-using `~/.cache/cf-shell/`. You can set the caching dir by setting
-`$XDG_CACHE_HOME`. To follow the project instead of `~/.cache`, run
-`claude` from a terminal where `XDG_CACHE_HOME=$PWD/.cache` (cache
-lands under `$PWD/.cache/cf-shell/`). Combined with the allowlist
-above, a single project-scoped permission rule covers the whole
-skill.
+using `~/.cache/cf-shell/`. You can change the defaul location by by setting
+`$XDG_CACHE_HOME`. Note that the `settings.json.template` uses the default path, so if you change the cache path, update your `settings.json` accordingly if you don't like pressing `Enter` all the damn time.
 
 ## Limits
 

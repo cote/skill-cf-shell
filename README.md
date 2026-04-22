@@ -9,7 +9,7 @@ over HTTPS. Built on [shell2http](https://github.com/msoap/shell2http).
 Claude Code can already run shell commands locally. `cf-shell`
 reroutes those commands into a CF-hosted container instead  -  so
 they run on platform hardware, inside a buildpack-staged image,
-with access to platform-issued credentials via service bindings,
+with access to platform services and marketplace through bindings,
 and with the audit trail / observability a platform gives you.
 
 Everything the skill does is a normal `cf push` + `cf curl` dance.
