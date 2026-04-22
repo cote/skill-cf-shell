@@ -112,7 +112,7 @@ Wrap either in `watch -n 5 '...'` for a live console.
 | `cf delete -f -r <app>` | Same, also remove the route |
 | `cf delete-service -f <name>` | Deprovision a service instance (permanent data loss for Postgres, etc.) |
 
-These are left out of `settings.json.template`'s allowlist
+These are left out of `settings.json.example`'s allowlist
 deliberately — always prompt before running.
 
 ## When to use the dispatcher vs `cf` directly

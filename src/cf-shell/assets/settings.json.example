@@ -1,13 +1,4 @@
 {
-  "__doc__": [
-    "cf-shell permission allowlist template.",
-    "Copy the entries below into .claude/settings.json (project-local)",
-    "or ~/.claude/settings.json (global). Destructive commands (cf delete,",
-    "cf delete-service, cf auth, cf login) are deliberately NOT allowed —",
-    "they always prompt, by design.",
-    "Strip this __doc__ key before using; Claude Code settings.json doesn't",
-    "recognize it."
-  ],
   "permissions": {
     "allow": [
       "Bash(cf target)",

@@ -77,11 +77,12 @@ and drop in the companion files. See `references/extending.md`.
 Most of the permission prompts this skill triggers are for read-only
 `cf` calls (`cf apps`, `cf env`, `cf logs`, `cf curl /v3/...`) or
 safe deploy/run calls (`cf push`, `cf set-env`, `cf restart`).
-`assets/settings.json.template` is a copy-paste allowlist for
-those, grouped by risk level. Drop into project `.claude/settings.json`
-(or global `~/.claude/settings.json`) and strip the `__doc__` key.
-Destructive calls (`cf delete*`, `cf auth`) are intentionally NOT
-allowlisted — they always prompt.
+`assets/settings.json.example` is a pure-JSON copy-paste allowlist
+for those. Drop it into `.claude/settings.json` (commit — team-wide),
+`.claude/settings.local.json` (gitignored — personal override), or
+`~/.claude/settings.json` (global). Destructive calls (`cf delete*`,
+`cf auth`) are intentionally NOT allowlisted — they always prompt.
+See `README.md` for setup examples.
 
 ## Keeping everything in one dir
 
