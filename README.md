@@ -40,7 +40,7 @@ unzip skill-cf-shell.zip -d ~/.claude/skills/
 **From a clone** (if you want to hack on it):
 
 ```bash
-git clone https://github.com/<you>/skill-cf-shell ~/dev/skill-cf-shell
+git clone https://github.com/cote/skill-cf-shell ~/dev/skill-cf-shell
 cd ~/dev/skill-cf-shell
 bash build.sh                           # stages target/cf-shell/ + target/skill-cf-shell.zip
 mkdir -p ~/.claude/skills
@@ -116,17 +116,19 @@ jq -s '.[0] * {permissions: {allow: (.[0].permissions.allow + .[1].permissions.a
 
 ## Keeping the skill's state project-local
 
-The dispatcher caches `shell2http` and per-app push dirs somewhere
-on disk. By default it uses `${XDG_CACHE_HOME:-$HOME/.cache}/cf-shell/`.
-For a one-project demo or to keep everything under one project
-tree:
+The dispatcher caches `shell2http` and per-app push dirs
+[XDG style](https://specifications.freedesktop.org/basedir/latest/)
+at `${XDG_CACHE_HOME:-$HOME/.cache}/cf-shell/`. For a one-project
+demo or to keep everything under one project tree, point
+`XDG_CACHE_HOME` at the project:
 
 ```bash
-export CF_SHELL_CACHE=$PWD/.cf-shell
+export XDG_CACHE_HOME=$PWD/.cache
 ```
 
-Combined with a project-scoped `.claude/settings.json`, this makes
-the skill's filesystem footprint entirely project-local.
+Cache then lands under `$PWD/.cache/cf-shell/`. Combined with a
+project-scoped `.claude/settings.json`, this makes the skill's
+filesystem footprint entirely project-local.
 
 ## Security
 

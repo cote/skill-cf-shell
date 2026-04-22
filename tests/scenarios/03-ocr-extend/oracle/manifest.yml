@@ -7,7 +7,7 @@
 #   2. python_buildpack    installs pip packages into a venv on PATH
 #   3. binary_buildpack    packages the shell2http Go binary; supplies the start command
 applications:
-  - name: larry-ocr
+  - name: cfsh-ocr-oracle
     memory: 512M
     disk_quota: 1G
     instances: 1

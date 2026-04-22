@@ -6,7 +6,7 @@
 # request).
 #
 # To extend with apt packages, Python libs, or bound services, edit the
-# pushed copy under ${CF_SHELL_CACHE:-~/.cache/cf-shell}/push/<app>/manifest.yml
+# pushed copy under ${XDG_CACHE_HOME:-~/.cache}/cf-shell/push/<app>/manifest.yml
 # before re-running `cf push`. See references/extending.md.
 applications:
   - name: {{APP}}

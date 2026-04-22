@@ -22,5 +22,6 @@ First public release.
 - `SECURITY.md`  -  auth/security model writeup.
 - Three scenario-style tests under `tests/scenarios/`: sed/awk,
   run-script, and OCR-with-buildpack-extension.
-- `CF_SHELL_CACHE` env var to keep the skill's local state
-  project-scoped.
+- XDG-style cache dir at `${XDG_CACHE_HOME:-~/.cache}/cf-shell/`.
+  Point `XDG_CACHE_HOME` at a project dir to keep the skill's local
+  state project-scoped.

@@ -18,7 +18,7 @@ run_test() {
 }
 
 echo "Running tests..."
-echo ""
+echo "WARNING: tests are actually not run. This does nothing."
 
 # Example: run_test "SKILL.md exists" test -f src/*/SKILL.md
 

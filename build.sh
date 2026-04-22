@@ -1,10 +1,9 @@
 #!/bin/bash
-# Build the cf-shell skill:
-#   src/cf-shell/  ->  target/cf-shell/  ->  target/skill-cf-shell.zip
+# Creates target/ to assemble the skill, copies over the skill
+# structure from src/cf-shell/, then zips it into a deploy-ready
+# skill at target/skill-cf-shell.zip.
 #
-# Self-contained - no external tooling needed beyond bash + zip.
-# Install from the zip:
-#   unzip target/skill-cf-shell.zip -d ~/.claude/skills/
+# Install with: unzip target/skill-cf-shell.zip -d ~/.claude/skills/
 set -euo pipefail
 
 HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"

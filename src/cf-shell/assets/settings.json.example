@@ -30,7 +30,10 @@
       "Bash(*cf-shell.sh secure *)",
       "Bash(*cf-shell.sh exec *)",
       "Bash(*cf-shell.sh url *)",
-      "Bash(*cf-shell.sh upload *)"
+      "Bash(*cf-shell.sh upload *)",
+      "Read(~/.cache/cf-shell/**)",
+      "Edit(~/.cache/cf-shell/**)",
+      "Write(~/.cache/cf-shell/**)"
     ]
   }
 }

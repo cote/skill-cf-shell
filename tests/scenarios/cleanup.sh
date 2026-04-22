@@ -2,7 +2,7 @@
 # cleanup.sh  -  remove any cf-shell scenario leftovers.
 #
 # Scoped strictly to names matching 'cfsh-*' in the current cf target.
-# Never touches larry-* or anything else. Safe to run repeatedly.
+# Never touches apps outside that pattern. Safe to run repeatedly.
 #
 # Usage:
 #   ./cleanup.sh           # interactive confirmation
@@ -21,7 +21,7 @@ cf target >/dev/null 2>&1 || {
 mapfile -t APPS < <(cf apps 2>/dev/null | awk 'NR>3 && $1 ~ /^cfsh-/ {print $1}')
 mapfile -t SVCS < <(cf services 2>/dev/null | awk 'NR>3 && $1 ~ /^cfsh-/ {print $1}')
 
-PUSH_ROOT="${CF_SHELL_CACHE:-${XDG_CACHE_HOME:-$HOME/.cache}/cf-shell}/push"
+PUSH_ROOT="${XDG_CACHE_HOME:-$HOME/.cache}/cf-shell/push"
 LOCAL_DIRS=()
 if [[ -d "$PUSH_ROOT" ]]; then
   for d in "$PUSH_ROOT"/cfsh-*; do

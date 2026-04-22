@@ -39,8 +39,9 @@ Rough flow:
 3. `scripts/cf-shell.sh exec ... "which tesseract || echo MISSING"`  - 
    confirm it's not there.
 4. Read `references/extending.md`. Edit the pushed `manifest.yml` under
-   `~/apps/cf-shell/cache/push/<app>/` to layer `apt-buildpack` and
-   `python_buildpack` ahead of `binary_buildpack`. Drop in `apt.yml`
+   `${XDG_CACHE_HOME:-~/.cache}/cf-shell/push/<app>/` to layer
+   `apt-buildpack` and `python_buildpack` ahead of `binary_buildpack`.
+   Drop in `apt.yml`
    (with `tesseract-ocr` + whatever language packs you'll need  -  at
    least `eng`, plus `spa` and/or `cat` for the facturas) and
    `requirements.txt` (with `pytesseract` and `Pillow`).
@@ -60,10 +61,10 @@ Rough flow:
 ## Oracle
 
 `oracle/` contains a working reference  -  `manifest.yml`, `apt.yml`,
-`requirements.txt`  -  from the `ocr-shell-platform/` project that the
-skill was abstracted from. **Don't read this during the run** unless
-you're stuck; it spoils the "did the model figure it out" signal. The
-reviewer uses it to grade what you produced.
+`requirements.txt`  -  known to produce a working OCR container.
+**Don't read this during the run** unless you're stuck; it spoils the
+"did the model figure it out" signal. The reviewer uses it to grade
+what you produced.
 
 ## Report format
 

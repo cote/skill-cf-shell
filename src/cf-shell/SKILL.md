@@ -1,10 +1,6 @@
 ---
 name: cf-shell
-description: >
-  Run bash commands in a Cloud Foundry (CF) hosted shell. Use when asked to
-  execute commands on a CF install, platform, etc. stand up a throwaway cloud
-  shell, or route work through a CF container instead of running it
-  locally. Tanzu Platform is a common Cloud Foundry based platform
+description: Run bash commands in a Cloud Foundry (CF) hosted shell. Use when asked to execute commands on a CF install, platform, etc. stand up a throwaway cloud shell, or route work through a CF container instead of running it locally. Tanzu Platform is a common Cloud Foundry based platform
 compatibility: Requires bash, cf CLI v8+, curl, jq. Assumes `cf target` already succeeded.
 metadata:
   author: cote, Claude
@@ -17,7 +13,7 @@ Tiny CF app that exposes `bash` over HTTPS via
 [shell2http](https://github.com/msoap/shell2http). POST a command,
 get stdout+stderr back. Each call is a fresh `bash -lc`.
 
-**The dispatcher is a convenience, not a gate.** `scripts/cf-shell.sh`
+**The dispatcher script is a convenience, not a gate.** `scripts/cf-shell.sh`
 wraps the common deploy+auth+exec loop, but you can do everything
 with `cf` directly and you'll usually want to when extending
 manifests or binding services. See `references/cf-cheatsheet.md`
@@ -81,20 +77,24 @@ and drop in the companion files. See `references/extending.md`.
 Most of the permission prompts this skill triggers are for read-only
 `cf` calls (`cf apps`, `cf env`, `cf logs`, `cf curl /v3/...`) or
 safe deploy/run calls (`cf push`, `cf set-env`, `cf restart`).
+
 `assets/settings.json.example` is a pure-JSON copy-paste allowlist
-for those. Drop it into `.claude/settings.json` (commit  -  team-wide),
-`.claude/settings.local.json` (gitignored  -  personal override), or
-`~/.claude/settings.json` (global). Destructive calls (`cf delete*`,
+for those. Drop it into `.claude/settings.json`,
+`.claude/settings.local.json`, wherever you put that file.
+ 
+ Destructive calls (`cf delete*`,
 `cf auth`) are intentionally NOT allowlisted  -  they always prompt.
 See `README.md` for setup examples.
 
 ## Keeping everything in one dir
 
-Set `CF_SHELL_CACHE=$PWD/.cf-shell` in the terminal that will run
-`claude`. The skill's shell2http cache and push dirs follow the
-project instead of landing in `~/.cache/cf-shell/`. Combined with
-the allowlist above, a single project-scoped permission rule covers
-the whole skill.
+By default, caching is done [XDG style](https://specifications.freedesktop.org/basedir/latest/)
+using `~/.cache/cf-shell/`. You can set the caching dir by setting
+`$XDG_CACHE_HOME`. To follow the project instead of `~/.cache`, run
+`claude` from a terminal where `XDG_CACHE_HOME=$PWD/.cache` (cache
+lands under `$PWD/.cache/cf-shell/`). Combined with the allowlist
+above, a single project-scoped permission rule covers the whole
+skill.
 
 ## Limits
 

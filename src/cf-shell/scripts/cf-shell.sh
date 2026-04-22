@@ -6,7 +6,7 @@ set -euo pipefail
 SHELL2HTTP_VERSION="1.17.0"
 SHELL2HTTP_URL="https://github.com/msoap/shell2http/releases/download/v${SHELL2HTTP_VERSION}/shell2http_${SHELL2HTTP_VERSION}_linux_amd64.tar.gz"
 
-CACHE_DIR="${CF_SHELL_CACHE:-${XDG_CACHE_HOME:-$HOME/.cache}/cf-shell}"
+CACHE_DIR="${XDG_CACHE_HOME:-$HOME/.cache}/cf-shell"
 BIN_DIR="$CACHE_DIR/bin"
 PUSH_ROOT="$CACHE_DIR/push"
 SHELL2HTTP_BIN="$BIN_DIR/shell2http"

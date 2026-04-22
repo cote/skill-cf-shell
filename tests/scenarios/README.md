@@ -37,8 +37,8 @@ them by accident.
 Each scenario's `expected-output.md` lists the signals the reviewer
 checks. Passes are fuzzy ("did Claude use the skill?", "did it clean
 up?") rather than strict diffs, because model behavior varies run to
-run. Log the grade somewhere  -  a line in `~/diane2/logs/diane/system.log`
-or a short note in this directory  -  so regressions across skill
+run. Log the grade somewhere  -  a short note in this directory or
+wherever you keep build/test notes  -  so regressions across skill
 revisions are visible.
 
 ## Cleanup

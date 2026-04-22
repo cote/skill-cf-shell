@@ -1,6 +1,20 @@
+# Secrets - never commit
 .env
 *.key
+
+# Build output
 target/
+
+# Python cruft
 __pycache__/
 *.pyc
+
+# Editor / OS cruft
 .DS_Store
+*.swp
+*.swo
+.idea/
+.vscode/
+
+# Local-only handoff notes
+HANDOFF.md
