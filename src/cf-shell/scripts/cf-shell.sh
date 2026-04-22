@@ -11,6 +11,11 @@ BIN_DIR="$CACHE_DIR/bin"
 PUSH_ROOT="$CACHE_DIR/push"
 SHELL2HTTP_BIN="$BIN_DIR/shell2http"
 
+# Resolve the skill's assets dir relative to this script's location.
+# Layout:  <skill>/scripts/cf-shell.sh  +  <skill>/assets/manifest.yml.template
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+ASSETS_DIR="$(dirname "$SCRIPT_DIR")/assets"
+
 default_app() { echo "${CF_SHELL_APP:-cf-shell}"; }
 
 die() { echo "cf-shell: $*" >&2; exit 1; }
@@ -101,18 +106,9 @@ cmd_deploy() {
   cp "$SHELL2HTTP_BIN" "$push_dir/shell2http"
   chmod u+x "$push_dir/shell2http"
 
-  cat > "$push_dir/manifest.yml" <<EOF
----
-applications:
-  - name: $app
-    memory: 256M
-    disk_quota: 512M
-    instances: 1
-    buildpacks:
-      - binary_buildpack
-    command: ./shell2http -form -export-all-vars -include-stderr -no-log-timestamp -timeout=300 -port=\$PORT /exec 'bash -lc "\$v_cmd"'
-    health-check-type: port
-EOF
+  local tmpl="$ASSETS_DIR/manifest.yml.template"
+  [[ -r "$tmpl" ]] || die "manifest template not found at $tmpl"
+  sed "s/{{APP}}/$app/g" "$tmpl" > "$push_dir/manifest.yml"
 
   echo "cf-shell: pushing $app from $push_dir"
   ( cd "$push_dir" && cf push -f manifest.yml -p . )

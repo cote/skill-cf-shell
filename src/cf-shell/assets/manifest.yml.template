@@ -1,0 +1,19 @@
+---
+# Base cf-shell manifest used by `cf-shell.sh deploy`.
+# The app-name placeholder on the first application entry is substituted
+# at deploy time. $PORT and $v_cmd are left literal; they expand inside
+# the container at runtime (PORT is set by CF, v_cmd by shell2http per
+# request).
+#
+# To extend with apt packages, Python libs, or bound services, edit the
+# pushed copy under ${CF_SHELL_CACHE:-~/.cache/cf-shell}/push/<app>/manifest.yml
+# before re-running `cf push`. See references/extending.md.
+applications:
+  - name: {{APP}}
+    memory: 256M
+    disk_quota: 512M
+    instances: 1
+    buildpacks:
+      - binary_buildpack
+    command: ./shell2http -form -export-all-vars -include-stderr -no-log-timestamp -timeout=300 -port=$PORT /exec 'bash -lc "$v_cmd"'
+    health-check-type: port

@@ -152,6 +152,7 @@ src/cf-shell/                 <- the skill (copy into ~/.claude/skills/)
     cf-cheatsheet.md          <- small cf CLI reference
   assets/
     settings.json.example     <- copy-paste permission allowlist
+    manifest.yml.template     <- base `cf push` manifest used by `deploy`
 tests/
   scenarios/                  <- 3 scenario-style tests
   run.sh                      <- harness stub
