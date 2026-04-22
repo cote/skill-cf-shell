@@ -1,5 +1,5 @@
 #!/bin/bash
-# cf-shell.sh — dispatcher for the cf-shell skill.
+# cf-shell.sh  -  dispatcher for the cf-shell skill.
 # Subcommands: preflight | deploy | exec | url | destroy
 set -euo pipefail
 
@@ -31,7 +31,7 @@ cmd_preflight() {
   for tool in cf curl jq; do
     have "$tool" || die "$tool not on PATH"
   done
-  cf target >/dev/null 2>&1 || die "'cf target' failed — run cf login first"
+  cf target >/dev/null 2>&1 || die "'cf target' failed  -  run cf login first"
   echo "cf target:"
   cf target
   ensure_shell2http
@@ -82,17 +82,17 @@ ensure_auth() {
 cmd_secure() {
   # Lock down an existing app's /exec with basic auth. Useful when you
   # extended the container by re-`cf push`ing your own manifest instead
-  # of going through `deploy` — the re-push leaves the endpoint open
+  # of going through `deploy`  -  the re-push leaves the endpoint open
   # until this is run.
   local app="${1:-$(default_app)}"
-  cf target >/dev/null 2>&1 || die "'cf target' failed — run cf login first"
+  cf target >/dev/null 2>&1 || die "'cf target' failed  -  run cf login first"
   cf app "$app" >/dev/null 2>&1 || die "app $app not found"
   ensure_auth "$app"
 }
 
 cmd_deploy() {
   local app="${1:-$(default_app)}"
-  cf target >/dev/null 2>&1 || die "'cf target' failed — run cf login first"
+  cf target >/dev/null 2>&1 || die "'cf target' failed  -  run cf login first"
   ensure_shell2http
 
   local push_dir="$PUSH_ROOT/$app"

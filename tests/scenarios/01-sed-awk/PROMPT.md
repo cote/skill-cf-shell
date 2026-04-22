@@ -1,4 +1,4 @@
-# Scenario 01 — sed/awk on the CF shell (base stack only)
+# Scenario 01  -  sed/awk on the CF shell (base stack only)
 
 You're being handed this task in a fresh Claude Code session.
 
@@ -19,7 +19,7 @@ Give the human:
 1. Total cases delivered per `store_chain`, sorted descending.
 2. The single chain with the most cases, called out on its own line.
 
-## Constraint — how you run it
+## Constraint  -  how you run it
 
 **Do not use your local Bash tool to compute this.** Use the `cf-shell`
 skill to run the aggregation inside a CF-hosted container:
@@ -27,13 +27,13 @@ skill to run the aggregation inside a CF-hosted container:
 - `preflight`, `deploy` (default app name is fine), then `exec` for the
   actual work.
 - Upload `shipments.csv` into the container (base64 in a single `cmd=`
-  POST is fine at this size — ~22 KB).
+  POST is fine at this size  -  ~22 KB).
 - The aggregation itself should be a single `awk` or `sort | awk`
   pipeline invoked via `exec`.
 - `destroy` the app when you're done.
 
 The base `cflinuxfs4` stack already has `bash`, `awk`, `sort`, `base64`
-— no buildpack extension needed for this one.
+ -  no buildpack extension needed for this one.
 
 ## Report format
 

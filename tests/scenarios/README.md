@@ -20,7 +20,7 @@ reference doc."
 ## Running a scenario
 
 These need a real CF foundation, a successful `cf target`, and (for
-scenario 3) a few minutes of push time. They are **live** — don't run
+scenario 3) a few minutes of push time. They are **live**  -  don't run
 them by accident.
 
 1. Start a fresh Claude Code session.
@@ -37,18 +37,18 @@ them by accident.
 Each scenario's `expected-output.md` lists the signals the reviewer
 checks. Passes are fuzzy ("did Claude use the skill?", "did it clean
 up?") rather than strict diffs, because model behavior varies run to
-run. Log the grade somewhere — a line in `~/diane2/logs/diane/system.log`
-or a short note in this directory — so regressions across skill
+run. Log the grade somewhere  -  a line in `~/diane2/logs/diane/system.log`
+or a short note in this directory  -  so regressions across skill
 revisions are visible.
 
 ## Cleanup
 
 `cleanup.sh` tears down anything the scenarios left behind in the
-current `cf target` — but only names matching `cfsh-*`. It never
+current `cf target`  -  but only names matching `cfsh-*`. It never
 touches other apps or services.
 
 ```
-./cleanup.sh           # interactive — lists what it will delete, prompts
+./cleanup.sh           # interactive  -  lists what it will delete, prompts
 ./cleanup.sh --yes     # same, no prompt
 KEEP_LOCAL=1 ./cleanup.sh --yes   # leave the ~/.cache/cf-shell/push/ dirs
 ```

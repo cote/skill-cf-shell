@@ -2,7 +2,7 @@
 
 The dispatcher in `scripts/cf-shell.sh` is a convenience, not a
 requirement. You can do everything it does with the `cf` CLI
-directly, and sometimes that's cleaner — especially when extending
+directly, and sometimes that's cleaner  -  especially when extending
 a manifest or binding services. Use whichever is more legible for
 the task.
 
@@ -24,7 +24,7 @@ with cf-shell. It is not a full `cf` reference.
 |---------|---------|
 | `cf apps` | List apps (name, state, instances, routes) |
 | `cf app <app>` | One app: health, stack, buildpacks, instance stats |
-| `cf app <app> --guid` | GUID only — useful for `cf curl` queries |
+| `cf app <app> --guid` | GUID only  -  useful for `cf curl` queries |
 | `cf routes` | Routes in the space |
 | `cf events <app>` | Audit events for one app (push, restart, etc.) |
 
@@ -50,16 +50,16 @@ with cf-shell. It is not a full `cf` reference.
 
 | Command | Purpose |
 |---------|---------|
-| `cf logs <app>` | Live tail — `STG/0`, `CELL/0`, `APP/…`, `RTR/…`, `API/…` |
+| `cf logs <app>` | Live tail  -  `STG/0`, `CELL/0`, `APP/…`, `RTR/…`, `API/…` |
 | `cf logs <app> --recent` | Snapshot of recent buffered logs (not live) |
-| `cf logs <app> \| grep RTR` | Trim to HTTP access log only — one line per exec |
+| `cf logs <app> \| grep RTR` | Trim to HTTP access log only  -  one line per exec |
 
 Prefix guide:
-- `STG/0` — staging (buildpack output during `cf push`)
-- `CELL/0` — container lifecycle (create, start, destroy)
-- `APP/PROC/WEB/0` — app stdout/stderr
-- `RTR/0` — gorouter access log (one per HTTP request)
-- `API/0` — control-plane events (`set-env`, `restart`, etc.)
+- `STG/0`  -  staging (buildpack output during `cf push`)
+- `CELL/0`  -  container lifecycle (create, start, destroy)
+- `APP/PROC/WEB/0`  -  app stdout/stderr
+- `RTR/0`  -  gorouter access log (one per HTTP request)
+- `API/0`  -  control-plane events (`set-env`, `restart`, etc.)
 
 ## Services
 
@@ -113,7 +113,7 @@ Wrap either in `watch -n 5 '...'` for a live console.
 | `cf delete-service -f <name>` | Deprovision a service instance (permanent data loss for Postgres, etc.) |
 
 These are left out of `settings.json.example`'s allowlist
-deliberately — always prompt before running.
+deliberately  -  always prompt before running.
 
 ## When to use the dispatcher vs `cf` directly
 
@@ -128,6 +128,6 @@ deliberately — always prompt before running.
 One useful pattern: `scripts/cf-shell.sh deploy <app>` for the
 initial push + auth, then `cf push -f manifest.yml -p .` from the
 push dir when you need to edit the manifest. `SH_BASIC_AUTH`
-persists across re-pushes, so you don't need `secure` on re-push —
+persists across re-pushes, so you don't need `secure` on re-push  - 
 only when you push a brand-new app from scratch without going
 through `deploy`.

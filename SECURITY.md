@@ -10,7 +10,7 @@ from outermost boundary inward.
 |-------|-----------|----------------|--------------|
 | 1. CF platform auth (push, set-env, delete) | `cf login` OAuth refresh token | The user, via SSO/UAA | `~/.cf/config.json` (mode 0600) |
 | 2. HTTPS transport on the app route | TLS cert for `*.apps.<domain>` | The CF foundation | CF-managed, auto-renewed |
-| 3. Shell2http HTTP Basic Auth on `/exec` | `SH_BASIC_AUTH=admin:<24 random alnums>` | The skill's `deploy` / `secure` subcommand | `cf env <app>` only — no local file |
+| 3. Shell2http HTTP Basic Auth on `/exec` | `SH_BASIC_AUTH=admin:<24 random alnums>` | The skill's `deploy` / `secure` subcommand | `cf env <app>` only  -  no local file |
 | 4. Container user | uid 2000 `vcap` | CF cell | Not a credential; a confinement boundary |
 
 The skill never touches layer 1 (it assumes `cf target` already
@@ -20,19 +20,19 @@ platform properties the skill just inherits.
 ## The only credential the skill owns: `SH_BASIC_AUTH`
 
 - **Generated** at `deploy` time: `admin:` + 24 random alphanumerics
-  from `/dev/urandom`. ~142 bits of entropy — brute force isn't a
+  from `/dev/urandom`. ~142 bits of entropy  -  brute force isn't a
   realistic attack vector.
 - **Set** via `cf set-env <app> SH_BASIC_AUTH <cred>`. Persists in CF
   DB as part of the app's env.
-- **Read** by shell2http at container start — it's what gates
+- **Read** by shell2http at container start  -  it's what gates
   `/exec`. 401s without it.
-- **Read** by the skill's `exec` subcommand — looks it up with
+- **Read** by the skill's `exec` subcommand  -  looks it up with
   `cf env <app>`, sends it as `Authorization: Basic …` on every
   request.
 - **Never** lands on local disk. No `.env` file, no keychain entry,
   no skill-state file. The dispatcher's own state dir
   (`~/.cache/cf-shell/`) holds shell2http and generated `manifest.yml`
-  — not the credential.
+   -  not the credential.
 - **Rotates** only on explicit destroy+redeploy, or
   `cf set-env`+`cf restart` by hand. Re-pushing the same app
   (e.g. to extend buildpacks) preserves whatever value is already
@@ -58,12 +58,12 @@ and only until the container gets replaced.
 
 The credential is visible to:
 
-- Anyone with `SpaceDeveloper` on the space — `cf env <app>` returns
+- Anyone with `SpaceDeveloper` on the space  -  `cf env <app>` returns
   it in plaintext.
-- Anyone who sees the dispatcher's stdout at deploy time — the line
+- Anyone who sees the dispatcher's stdout at deploy time  -  the line
   `cf-shell: SH_BASIC_AUTH set to admin:xxxx` is printed. Watch for
   scrollback, screen shares, pasted transcripts, recorded terminals.
-- The CF platform operators — CF DB + backups hold env vars. Standard
+- The CF platform operators  -  CF DB + backups hold env vars. Standard
   platform-trust model.
 
 ## Known gotchas
@@ -75,7 +75,7 @@ If you author your own `manifest.yml` and run `cf push` directly
 **no `SH_BASIC_AUTH` set**. shell2http falls through to
 "no basic auth configured" and serves `/exec` to the public internet.
 
-**Mitigation**: `cf-shell.sh secure <app>` — idempotent, generates and
+**Mitigation**: `cf-shell.sh secure <app>`  -  idempotent, generates and
 sets the credential on an existing app if missing. Run it immediately
 after any hand-rolled push. (This happened once in practice, which
 is why `secure` exists.)
@@ -96,7 +96,7 @@ DB on the same binding.**
 ### No per-user auth; no rate limiting; no audit logging
 
 One shared credential. Everyone who has it has the same access. No
-per-user trail of who ran what — every request shows up as
+per-user trail of who ran what  -  every request shows up as
 `admin` in `RTR/0` access logs. shell2http doesn't rate-limit
 failed auth attempts.
 
@@ -107,7 +107,7 @@ behind a proper outer fence.
 
 ## How the blast radius differs from plain `cf push`
 
-Architecturally identical to any `cf push` — same public DNS, same
+Architecturally identical to any `cf push`  -  same public DNS, same
 TLS, same `VCAP_SERVICES` model, same `SpaceDeveloper` visibility.
 Deploying cf-shell is not a categorically different security action
 from deploying Pet Clinic.
@@ -127,7 +127,7 @@ Slack channel.
 
 - **Rotate credential**: `cf set-env <app> SH_BASIC_AUTH admin:<new>` +
   `cf restart <app>`. Or destroy + redeploy.
-- **Revoke**: `cf delete -f <app>` — route stops resolving, container
+- **Revoke**: `cf delete -f <app>`  -  route stops resolving, container
   is destroyed. Fastest way to fully close the door.
 - **Re-push preserves credential**: intentional. Lets you extend the
   container (add buildpacks) without regenerating the cred.
@@ -146,7 +146,7 @@ Slack channel.
   access log captures.
 
 If you want any of those, they belong in a real auth proxy or in
-the foundation's route policies — not in a ~200-line dispatcher.
+the foundation's route policies  -  not in a ~200-line dispatcher.
 
 ## Summary in one paragraph
 
@@ -157,6 +157,6 @@ generated shared HTTP basic-auth credential on `/exec`, stored only
 in `cf env`, rotated only on deploy. Each `exec` round-trips through
 that fence to a fresh non-root `bash -lc` in the container. The only
 real pitfall is bypassing the skill's `deploy` path when extending
-the container, which leaves the inner fence unset — `cf-shell.sh
+the container, which leaves the inner fence unset  -  `cf-shell.sh
 secure <app>` exists specifically to close that case. For anything
 beyond a single-operator dev shell, put a proper auth proxy in front.

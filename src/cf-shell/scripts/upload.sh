@@ -1,5 +1,5 @@
 #!/bin/bash
-# upload.sh — upload a local file into a cf-shell container via
+# upload.sh  -  upload a local file into a cf-shell container via
 # chunked base64 over shell2http.
 #
 # shell2http's /exec endpoint is form-urlencoded, so binary uploads
@@ -66,8 +66,8 @@ REMOTE_SIZE="$(
 )"
 
 if [[ "$REMOTE_SIZE" != "$LOCAL_SIZE" ]]; then
-  echo "upload.sh: size mismatch — local $LOCAL_SIZE, remote $REMOTE_SIZE" >&2
+  echo "upload.sh: size mismatch  -  local $LOCAL_SIZE, remote $REMOTE_SIZE" >&2
   exit 3
 fi
 
-echo "upload.sh: OK — $REMOTE_BIN ($REMOTE_SIZE bytes)"
+echo "upload.sh: OK  -  $REMOTE_BIN ($REMOTE_SIZE bytes)"

@@ -7,7 +7,7 @@ over HTTPS. Built on [shell2http](https://github.com/msoap/shell2http).
 ## Why
 
 Claude Code can already run shell commands locally. `cf-shell`
-reroutes those commands into a CF-hosted container instead — so
+reroutes those commands into a CF-hosted container instead  -  so
 they run on platform hardware, inside a buildpack-staged image,
 with access to platform-issued credentials via service bindings,
 and with the audit trail / observability a platform gives you.
@@ -19,7 +19,7 @@ No custom CF plugins, no patched server components.
 
 - `bash` (4.0+), `curl`, `jq` on your `$PATH`.
 - `cf` CLI v8+ (download: https://github.com/cloudfoundry/cli/releases).
-- A Cloud Foundry foundation with `cf target` already succeeded — the
+- A Cloud Foundry foundation with `cf target` already succeeded  -  the
   skill never calls `cf login` / `cf auth`, that's your responsibility.
 - Claude Code (https://www.anthropic.com/claude-code) for the skill
   itself.
@@ -68,7 +68,7 @@ buildpacks or binding services).
 Most of the `cf` commands the skill uses are read-only or safe
 deploy/run calls. `assets/settings.json.example` is a ready-to-use
 allowlist of those. Destructive calls (`cf delete*`, `cf auth`,
-`cf login`) are deliberately **not** in it — those always prompt.
+`cf login`) are deliberately **not** in it  -  those always prompt.
 
 Three places to drop the contents (Claude Code merges all three at
 startup):
@@ -79,7 +79,7 @@ startup):
 | `<project>/.claude/settings.local.json` | This project, your machine only | No (gitignored) |
 | `~/.claude/settings.json` | Global, all projects | n/a |
 
-Example — drop into a project's committed settings:
+Example  -  drop into a project's committed settings:
 
 ```bash
 mkdir -p .claude
@@ -113,7 +113,7 @@ the skill's filesystem footprint entirely project-local.
 
 The skill generates a random 24-character basic-auth credential
 (`SH_BASIC_AUTH`), stores it only in `cf env`, and uses it for every
-`exec`. See [`SECURITY.md`](SECURITY.md) for the full threat model —
+`exec`. See [`SECURITY.md`](SECURITY.md) for the full threat model  - 
 what the skill guards, what it doesn't, and what to do if you want
 real per-user auth on top.
 
@@ -130,10 +130,10 @@ Three scenario-style tests under `tests/scenarios/`. Each has a
 `PROMPT.md` you hand to a fresh Claude Code session, synthetic
 input fixtures, and an `expected-output.md` for grading:
 
-- `01-sed-awk/` — sed/awk on a CSV (base stack, fastest).
-- `02-run-script/` — write+run a script in the container
+- `01-sed-awk/`  -  sed/awk on a CSV (base stack, fastest).
+- `02-run-script/`  -  write+run a script in the container
   (filesystem-persistence quirk).
-- `03-ocr-extend/` — extend the container with apt + python for OCR
+- `03-ocr-extend/`  -  extend the container with apt + python for OCR
   (the "can the model drive a buildpack extension" test).
 
 `tests/scenarios/cleanup.sh` tears down any `cfsh-*` apps + local

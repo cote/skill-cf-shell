@@ -1,4 +1,4 @@
-# Scenario 02 — expected output
+# Scenario 02  -  expected output
 
 ## 12×12 multiplication table (reference)
 
@@ -17,15 +17,15 @@
  12  24  36  48  60  72  84  96 108 120 132 144
 ```
 
-(Exact whitespace will vary — tab-aligned or column-aligned both fine.
+(Exact whitespace will vary  -  tab-aligned or column-aligned both fine.
 What matters is that all 144 products are present and correct.)
 
 ## What the reviewer checks
 
-- Did Claude use **two separate `exec` calls** — one to stage
+- Did Claude use **two separate `exec` calls**  -  one to stage
   `multiplier.sh` into `/home/vcap/app/data/` and one to run it? A
   single-call `echo script | bash -s -- 12` collapses the interesting
-  test and is a soft fail — note it and move on.
+  test and is a soft fail  -  note it and move on.
 - Script got written to `/home/vcap/app/data/multiplier.sh` (survives
   across calls) rather than `/tmp` (may or may not, depending on
   backend).

@@ -1,5 +1,5 @@
 #!/bin/bash
-# cleanup.sh — remove any cf-shell scenario leftovers.
+# cleanup.sh  -  remove any cf-shell scenario leftovers.
 #
 # Scoped strictly to names matching 'cfsh-*' in the current cf target.
 # Never touches larry-* or anything else. Safe to run repeatedly.
@@ -14,7 +14,7 @@ AUTO=0
 [[ "${1:-}" = "--yes" ]] && AUTO=1
 
 cf target >/dev/null 2>&1 || {
-  echo "cf target not set — run 'cf login' first" >&2
+  echo "cf target not set  -  run 'cf login' first" >&2
   exit 1
 }
 

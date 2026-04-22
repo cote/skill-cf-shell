@@ -1,4 +1,4 @@
-# Scenario 03 — expected output
+# Scenario 03  -  expected output
 
 This is the hardest scenario. The invoice PNGs are synthetic fixtures;
 their exact totals aren't encoded here because OCR of the dummies will
@@ -20,7 +20,7 @@ Compare Claude's final `manifest.yml` against `oracle/manifest.yml`.
 Order matters.
 
 `apt.yml` must include `tesseract-ocr` and at least one language pack
-beyond `-eng` (the facturas are Spanish and/or Catalan — `tesseract-ocr-spa`
+beyond `-eng` (the facturas are Spanish and/or Catalan  -  `tesseract-ocr-spa`
 or `tesseract-ocr-cat` expected). `oracle/apt.yml` is the full set.
 
 `requirements.txt` should include `pytesseract` and `Pillow`. Version
@@ -30,10 +30,10 @@ pins are nice but not required.
 
 - `tesseract --version` call shown in the transcript after the
   extension push.
-- OCR invocations via `cf-shell exec` — either `tesseract <img>.png -`
+- OCR invocations via `cf-shell exec`  -  either `tesseract <img>.png -`
   or a Python snippet using `pytesseract.image_to_string`.
 - If Claude used pytesseract, did it set `TESSDATA_PREFIX` when needed?
-  (Some apt-buildpack layouts require it — see the main project's
+  (Some apt-buildpack layouts require it  -  see the main project's
   `invoice-cleanup/CLAUDE.md`.)
 
 ### Did base64 chunking come up?
@@ -67,7 +67,7 @@ a fail.
 
 Not during the run. If the transcript shows a read of
 `oracle/manifest.yml` before Claude wrote its own, flag it as a spoiled
-trial — the whole point is "did the model figure out the extension
+trial  -  the whole point is "did the model figure out the extension
 from `references/extending.md`."
 
 ### Cleanup
