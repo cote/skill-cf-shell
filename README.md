@@ -12,9 +12,6 @@ they run on platform hardware, inside a buildpack-staged image,
 with access to platform services and marketplace through bindings,
 and with the audit trail / observability a platform gives you.
 
-Everything the skill does is a normal `cf push` + `cf curl` dance.
-No custom CF plugins, no patched server components.
-
 ## Prerequisites
 
 - `bash` (4.0+), `curl`, `jq` on your `$PATH`.
