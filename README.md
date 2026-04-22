@@ -74,7 +74,8 @@ bash ~/.claude/skills/cf-shell/scripts/cf-shell.sh exec my-shell 'uname -a; whoa
 bash ~/.claude/skills/cf-shell/scripts/cf-shell.sh destroy my-shell
 ```
 
-`SKILL.md` has the full command reference. `references/cf-cheatsheet.md`
+`SKILL.md` has the full command reference.
+[`references/cf-cheatsheet.md`](src/cf-shell/references/cf-cheatsheet.md)
 is a short `cf` CLI reference for when you'd rather skip the
 dispatcher and use `cf` directly (often cleaner for extending
 buildpacks or binding services).
@@ -134,8 +135,9 @@ sequenceDiagram
 ## Reducing permission prompts
 
 Most of the `cf` commands the skill uses are read-only or safe
-deploy/run calls. `assets/settings.json.example` is a ready-to-use
-allowlist of those. Destructive calls (`cf delete*`, `cf auth`,
+deploy/run calls.
+[`assets/settings.json.example`](src/cf-shell/assets/settings.json.example)
+is a ready-to-use allowlist of those. Destructive calls (`cf delete*`, `cf auth`,
 `cf login`) are deliberately **not** in it  -  those always prompt.
 
 Three places to drop the contents (Claude Code merges all three at
@@ -196,7 +198,7 @@ then edit the generated push dir.
 
 ## Tests
 
-Three scenario-style tests under `tests/scenarios/`. Each has a
+Three scenario-style tests under [`tests/scenarios/`](tests/scenarios/). Each has a
 `PROMPT.md` you hand to a fresh Claude Code session, synthetic
 input fixtures, and an `expected-output.md` for grading:
 
@@ -206,7 +208,7 @@ input fixtures, and an `expected-output.md` for grading:
 - `03-ocr-extend/`  -  extend the container with apt + python for OCR
   (the "can the model drive a buildpack extension" test).
 
-`tests/scenarios/cleanup.sh` tears down any `cfsh-*` apps + local
+[`tests/scenarios/cleanup.sh`](tests/scenarios/cleanup.sh) tears down any `cfsh-*` apps + local
 push dirs between runs.
 
 ## Repo layout
