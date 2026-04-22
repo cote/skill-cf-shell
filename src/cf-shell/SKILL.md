@@ -115,3 +115,5 @@ using `~/.cache/cf-shell/`. You can change the defaul location by by setting
   `SH_BASIC_AUTH` set and `/exec` is **open to the internet**. Run
   `scripts/cf-shell.sh secure <app>` immediately after any such push
   to lock it down.
+
+Authored by Coté and Claude: https://github.com/cote/skill-cf-shell/tree/main
