@@ -26,11 +26,30 @@ No custom CF plugins, no patched server components.
 
 ## Install
 
-Copy the `cf-shell/` directory under `src/` into `~/.claude/skills/`:
+Two paths, pick one.
+
+**From a released zip** (easiest):
+
+```bash
+# Download skill-cf-shell.zip from the project's GitHub Releases,
+# then:
+mkdir -p ~/.claude/skills
+unzip skill-cf-shell.zip -d ~/.claude/skills/
+```
+
+**From a clone** (if you want to hack on it):
 
 ```bash
 git clone https://github.com/<you>/skill-cf-shell ~/dev/skill-cf-shell
+cd ~/dev/skill-cf-shell
+bash build.sh                           # stages target/cf-shell/ + target/skill-cf-shell.zip
 mkdir -p ~/.claude/skills
+unzip target/skill-cf-shell.zip -d ~/.claude/skills/
+```
+
+Or skip the zip and copy the source dir directly:
+
+```bash
 cp -r ~/dev/skill-cf-shell/src/cf-shell ~/.claude/skills/
 chmod u+x ~/.claude/skills/cf-shell/scripts/*.sh
 ```
@@ -156,8 +175,10 @@ src/cf-shell/                 <- the skill (copy into ~/.claude/skills/)
 tests/
   scenarios/                  <- 3 scenario-style tests
   run.sh                      <- harness stub
+build.sh                      <- one-command build into target/skill-cf-shell.zip
 SECURITY.md                   <- threat model + security guarantees
 CHANGELOG.md
+LICENSE
 README.md                     <- this file
 ```
 
