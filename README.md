@@ -82,6 +82,58 @@ is a short `cf` CLI reference for when you'd rather skip the
 dispatcher and use `cf` directly (often cleaner for extending
 buildpacks or binding services).
 
+## How it works
+
+### Deploy flow
+
+What `cf-shell.sh deploy my-app` actually does:
+
+```mermaid
+flowchart TD
+    U[User or Claude Code] -->|cf-shell.sh deploy my-app| D[Dispatcher<br/>scripts/cf-shell.sh]
+
+    D --> A[Ensure shell2http binary<br/>in local cache<br/>~/.cache/cf-shell/bin/shell2http]
+    A --> B[Generate random<br/>SH_BASIC_AUTH]
+    B --> E[Stage push dir<br/>~/.cache/cf-shell/push/my-app/]
+    E --> F[Render manifest.yml<br/>from assets/manifest.yml.template<br/>substitute APP = my-app]
+    F --> G[Copy shell2http binary<br/>into push dir]
+    G --> H[cf push -f manifest.yml -p .]
+
+    H --> CF[CF Foundation<br/>binary_buildpack stages shell2http<br/>route my-app.cf-domain assigned]
+
+    D --> I[cf set-env my-app<br/>SH_BASIC_AUTH ...]
+    I --> J[cf restart my-app]
+
+    J --> K[Running container<br/>shell2http on $PORT<br/>POST /exec runs bash -lc]
+```
+
+### Exec flow - fortune of the day
+
+Claude Code in a session where the skill is loaded is nudged to route
+shell work through `cf-shell` instead of its local Bash tool. Here's
+what happens when you ask for a `fortune`. `fortune` isn't in the
+base `cflinuxfs4` stack, so this assumes you already extended the
+container with `fortune-mod` via `apt-buildpack` (see
+[`references/extending.md`](src/cf-shell/references/extending.md)).
+
+```mermaid
+sequenceDiagram
+    actor U as You
+    participant CC as Claude Code
+    participant D as cf-shell.sh exec
+    participant CF as CF container<br/>(shell2http + bash + fortune)
+
+    U->>CC: "give me a random fortune<br/>from the cf-shell"
+    Note over CC: Skill says: don't run bash<br/>locally, route through cf-shell
+    CC->>D: cf-shell.sh exec my-app "fortune -s"
+    D->>D: read SH_BASIC_AUTH<br/>from cf env my-app
+    D->>CF: POST /exec<br/>Authorization: Basic ...<br/>cmd=fortune -s
+    CF->>CF: bash -lc "fortune -s"
+    CF-->>D: HTTP 200, body = quote<br/>X-Shell2http-Exit-Code: 0
+    D-->>CC: quote on stdout, exit 0
+    CC-->>U: displays the fortune
+```
+
 ## Reducing permission prompts
 
 Most of the `cf` commands the skill uses are read-only or safe
